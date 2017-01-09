@@ -40,6 +40,9 @@
 
 void pre_auton()
 {
+	nMotorEncoder[liftLeftOut] = 0;
+	resetDriveSensors();
+
 	// Set bStopTasksBetweenModes to false if you want to keep user created tasks
 	// running between Autonomous and Driver controlled modes. You will need to
 	// manage all user created tasks if set to false.
@@ -86,13 +89,10 @@ task autonomous()
 task driveControl(){
 
 	while(true){
-	//setDriveRight(vexRT[Ch3] - vexRT[Ch1]);
-	//setDriveLeft(vexRT[Ch3] + vexRT[Ch1]);
-	motor[port3] = vexRT[Ch3]+ vexRT[Ch1];
-	motor[port5] = vexRT[Ch3] -vexRT[Ch1];
-
-	//motor[driveRight] = vexRT[Ch3];
-
+		//setDriveRight(vexRT[Ch3] - vexRT[Ch1]);
+		//setDriveLeft(vexRT[Ch3] + vexRT[Ch1]);
+		motor[port3] = vexRT[Ch3]+ vexRT[Ch1];
+		motor[port5] = vexRT[Ch3] -vexRT[Ch1];
 		wait1Msec(5);
 
 	}
@@ -106,6 +106,15 @@ task liftControl(){
 		else if (vexRT[Btn5D]==1){
 			setLift(-127);
 		}
+		else if(vexRT[Btn6U] == 1){
+			setLiftPosition(liftPositionTop);
+		}
+		else if (vexRT[Btn6D]==1){
+			setLiftPosition(liftPositionBottom);
+		}
+		else if(vexRT[Btn8U]==1){
+			setLiftPosition(liftPositionMid);
+		}
 		else{
 			setLift(10);
 		}
@@ -113,14 +122,45 @@ task liftControl(){
 
 	}
 }
+task clawLeftControlPID(){
+	clawLeftSetPosition(2000);
+		while(true){
+		currentPosition = SensorValue(clawLeftPot);
+		error = setPosition - currentPosition;
+		integral += error;
+
+		if(lastCurrentPosition != currentPosition){
+			integral = 0;
+		}
+		derivative = currentPosition-lastCurrentPosition;
+		lastCurrentPosition = currentPosition;
+
+
+		if(integral> integralCap){
+			integral = integralCap;
+		}
+		int speed = (kP * error) + (kI * integral) + (kD * derivative);
+		if(speed>80){
+			speed=80;
+		}
+		else if(speed < -80){
+			speed = -80;
+		}
+		setClawLeft(speed);
+		wait1Msec(10);
+
+	}
+
+}
+
 task clawLeftControl(){
 	//while(true){
-		//if(vexRT[Btn6U] == 1){ // open
-		//	setClawLeftPosition(1800);
-		//}
-		//else if(vexRT[Btn6D]==1){ //close
-		//  setClawLeftPosition(2900);
-		//}
+	//if(vexRT[Btn6U] == 1){ // open
+	//	setClawLeftPosition(1800);
+	//}
+	//else if(vexRT[Btn6D]==1){ //close
+	//  setClawLeftPosition(2900);
+	//}
 	while(true){
 		if(vexRT[Btn5UXmtr2]==1){
 			motor[clawLeft] = 127;
@@ -145,7 +185,7 @@ task clawLeftControl(){
 	}
 
 	wait1Msec(5);
-	}
+}
 
 
 task clawRightControl(){
@@ -158,18 +198,19 @@ task clawRightControl(){
 	//	}
 
 	//wait1Msec(5);
-	}
+}
 
 
 task usercontrol()
 {
 	startTask(driveControl);
-  startTask(liftControl);
-	startTask(clawLeftControl);
-//	startTask(clawRightControl);
+	startTask(liftControl);
+	//startTask(clawLeftControl);
+	startTask(clawLeftControlPID);
+	//	startTask(clawRightControl);
 
-  while(true){
+	while(true){
 
-  }
+	}
 	// User control code here, inside the loop
 }

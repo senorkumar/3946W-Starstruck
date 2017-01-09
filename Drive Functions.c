@@ -7,78 +7,37 @@ void setDriveRight(int speed) // sets right side of drive to speed
 {
 	motor[driveRight] = speed;
 }
-//void resetDrive()// sets drive speed to 0
-//{
-//	setDriveLeft(0);
-//	setDriveRight(0);
-//}
+void setDrive(int speed){
+	setDriveLeft(speed);
+	setDriveRight(speed);
+}
+void resetDrive()// sets drive speed to 0
+{
+	setDriveLeft(0);
+	setDriveRight(0);
+}
 
-//void setDrive(string direction, int speed) // sets drive direction and to specific speed
-//{
-
-//	if(direction == "left"){
-//		setDriveLeft(speed);
-//	}
-//	else if(direction == "right"){
-//		setDriveRight(speed);
-//	}
-//	else if(direction == "forward"){
-//		setDriveLeft(speed);
-//		setDriveRight(speed);
-//	}
-//	else if(direction == "turn"){
-//		if(speed>0){
-//			setDriveRight(-speed);
-//			setDriveLeft(speed);
-//		}
-//		else{
-//			setDriveRight(speed);
-//			setDriveLeft(-speed);
-//		}
-//	}
-//}
-
-//void setDriveDistance(string direction, int distance, int speed){ // uses sensors to drive robot a encoder value
-//	//resetDrive();
-//	//resetDriveSensors();
+void setDriveForwardDistance(int distance, int direction){
+	nMotorEncoder[driveLeft] = 0;
+	nMotorEncoder[driveRight] = 0;
+	if(direction >0){
+		while((nMotorEncoder[driveLeft] + nMotorEncoder[driveRight])/2 < distance){
+			setDrive(127);
+		}
+		setDrive(-127);
+		wait1Msec(100);
+		setDrive(0);
+		wait1Msec(1);
+	}
+	else{
+		while((nMotorEncoder[driveLeft] + nMotorEncoder[driveRight])/2 > distance){
+			setDrive(-127);
+		}
+		setDrive(127);
+		wait1Msec(100);
+		setDrive(0);
+		wait1Msec(1);
+	}
 
 
-//	//if(direction == "left"){
-//	//	while(SensorValue(driveLeftQuad)<distance){
-//	//			setDriveLeft(speed);
-//	//			wait1Msec(1);
-//	//	}
-//	//	wait1Msec(1);
-//	//	setDriveLeft(0);
-//	//}
-//	//else if(direction == "right"){
-//	//		while(SensorValue(driveRightQuad)<distance){
-//	//			setDriveRight(speed);
-//	//			wait1Msec(1);
-//	//	}
-//	//	wait1Msec(1);
-//	//	setDriveRight(0);
-//	//}
-//	//else if(direction == "forward"){
-//	//	setDriveLeft(speed);
-//	//	setDriveRight(speed);
-//	//}
-//	//else if(direction == "turn"){
-//	//	if(speed>0){
-//	//		setDriveRight(-speed);
-//	//		setDriveLeft(speed);
-//	//	}
-//	//	else{
-//	//		setDriveRight(speed);
-//	//		setDriveLeft(-speed);
-//	//	}
-//}
-//int limit(int input){
-//	if(input<15 && input>-15){
-//		return 0;
-//	}
-//	else{
-//		return input;
-//	}
-
-//}
+}
