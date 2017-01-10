@@ -25,7 +25,10 @@
 #include "Drive Functions.c"
 #include "Lift Functions.c"
 #include "Sensor Functions.c"
-#include "Claw Functions.c"
+#include "Claw Left Functions.c"
+#include "Claw Right Functions.c"
+#include "Autonomous Functions.c"
+
 
 
 /*---------------------------------------------------------------------------*/
@@ -41,6 +44,8 @@
 void pre_auton()
 {
 	nMotorEncoder[liftLeftOut] = 0;
+	nMotorEncoder[driveLeft] = 0;
+	nMotorEncoder[driveRight] = 0;
 	resetDriveSensors();
 
 	// Set bStopTasksBetweenModes to false if you want to keep user created tasks
@@ -67,15 +72,7 @@ void pre_auton()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-task autonomous()
-{
-	// ..........................................................................
-	// Insert user code here.
-	// ..........................................................................
 
-	// Remove this function call once you have "real" code.
-	AutonomousCodePlaceholderForTesting();
-}
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -122,64 +119,94 @@ task liftControl(){
 
 	}
 }
+task liftControlAuton(){
+	while(true){
+		if(liftConst){
+			setLift(10);
+		}
+	}
+}
 task clawLeftControlPID(){
-	clawLeftSetPosition(2000);
-		while(true){
-		currentPosition = SensorValue(clawLeftPot);
-		error = setPosition - currentPosition;
-		integral += error;
+	while(true){
+		currentPosition_CL = SensorValue(clawLeftPot);
+		error_CL = setPosition_CL - currentPosition_CL;
 
-		if(lastCurrentPosition != currentPosition){
-			integral = 0;
-		}
-		derivative = currentPosition-lastCurrentPosition;
-		lastCurrentPosition = currentPosition;
+		//integral += error;
+		//if(lastCurrentPosition != currentPosition){
+		//	integral = 0;
+		//}
+		derivative_CL = (currentPosition_CL-lastCurrentPosition_CL)/10;
+		lastCurrentPosition_CL = currentPosition_CL;
 
+		//if(integral_CL> integralCap_CL){
+		//	integral_CL = integralCap_CL;
+		//}
 
-		if(integral> integralCap){
-			integral = integralCap;
+		int speed_CL = (kP_CL * error_CL) + (kI_CL * integral_CL) + (kD_CL * derivative_CL);
+
+		if(speed_CL>120){
+			speed_CL=120;
 		}
-		int speed = (kP * error) + (kI * integral) + (kD * derivative);
-		if(speed>80){
-			speed=80;
+		else if(speed_CL < -120){
+			speed_CL = -120;
 		}
-		else if(speed < -80){
-			speed = -80;
+		if(speed_CL<30 && speed_CL>-30){
+			speed_CL=0;
 		}
-		setClawLeft(speed);
+
+		setClawLeft(speed_CL);
 		wait1Msec(10);
 
 	}
 
 }
 
-task clawLeftControl(){
-	//while(true){
-	//if(vexRT[Btn6U] == 1){ // open
-	//	setClawLeftPosition(1800);
-	//}
-	//else if(vexRT[Btn6D]==1){ //close
-	//  setClawLeftPosition(2900);
-	//}
+
+task clawRightControlPID(){
 	while(true){
-		if(vexRT[Btn5UXmtr2]==1){
-			motor[clawLeft] = 127;
+		currentPosition_CR = SensorValue(clawRightPot);
+		error_CR = setPosition_CR - currentPosition_CR;
+
+		//integral += error;
+		//if(lastCurrentPosition != currentPosition){
+		//	integral = 0;
+		//}
+		derivative_CR = (currentPosition_CR-lastCurrentPosition_CR)/10;
+		lastCurrentPosition_CR = currentPosition_CR;
+
+		//if(integral_CL> integralCap_CL){
+		//	integral_CL = integralCap_CL;
+		//}
+
+		int speed_CR = (kP_CR * error_CR) + (kI_CR * integral_CR) + (kD_CR * derivative_CR);
+
+		if(speed_CR>120){
+			speed_CR=120;
 		}
-		else if(vexRT[Btn5DXmtr2]==1){
-			motor[clawLeft] = -127;
+		else if(speed_CR < -120){
+			speed_CR = -120;
 		}
-		else{
-			motor[clawLeft] = 0;
+		if(speed_CR<30 && speed_CR>-30){
+			speed_CR=0;
 		}
 
-		if(vexRT[Btn6UXmtr2]==1){
-			motor[clawRight] = 127;
+		setClawRight(-speed_CR);
+		wait1Msec(10);
+
+	}
+
+
+}
+
+task clawControl(){
+	while(true){
+		if(vexRT[Btn6UXmtr2]==1){//open
+			clawLeftSetPosition(clawLeftPositionOpen);
+			clawRightSetPosition(clawRightPositionOpen);
 		}
-		else if(vexRT[Btn6DXmtr2]==1){
-			motor[clawRight] = -127;
-		}
-		else{
-			motor[clawRight] = 0;
+		else if(vexRT[Btn5UXmtr2]==1){//close
+			clawLeftSetPosition(clawLeftPositionClosed);
+			clawRightSetPosition(clawRightPositionClosed);
 		}
 
 	}
@@ -188,26 +215,26 @@ task clawLeftControl(){
 }
 
 
-task clawRightControl(){
-	//while(true){
-	//	if(vexRT[Btn6U] == 1){ // open
-	//		setClawRightPosition(1600);
-	//	}
-	//	else if(vexRT[Btn6D]==1){ //close
-	//		setClawRightPosition(800);
-	//	}
+task autonomous()
+{
+	startTask(liftControlAuton);
+	startTask(clawLeftControlPID);
+	startTask(clawRightControlPID);
+	wait1Msec(1);
+	auton_fence();
 
-	//wait1Msec(5);
 }
-
 
 task usercontrol()
 {
 	startTask(driveControl);
 	startTask(liftControl);
-	//startTask(clawLeftControl);
+	startTask(clawControl);
 	startTask(clawLeftControlPID);
-	//	startTask(clawRightControl);
+	startTask(clawRightControlPID);
+
+
+
 
 	while(true){
 

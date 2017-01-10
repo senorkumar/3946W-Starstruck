@@ -1,7 +1,10 @@
 int liftPositionBottom = 0;
 int liftPositionMid = 300;
+int liftPositionStart = 800;
 int liftPositionTop = 1000;
-int liftPositionFence = 700;
+int liftPositionFence = 800;
+
+bool liftConst = true;
 void setLiftLeft(int speed){
 	motor[liftLeftMid]= speed;
 	motor[liftLeftOut] = speed;
@@ -25,6 +28,7 @@ void resetLift(){
 }
 
 void setLiftPosition(int position){
+	liftConst = false;
 	if(position>nMotorEncoder[liftLeftOut]){
 		while(position>nMotorEncoder[liftLeftOut]){
 			setLift(127);
@@ -34,8 +38,10 @@ void setLiftPosition(int position){
 		wait1Msec(100);
 		resetLift();
 		wait1Msec(1);
+		liftConst=true;
 	}
 	else{
+		liftConst =false;
 		while(position<nMotorEncoder[liftLeftOut]){
 			setLift(-127);
 			wait1Msec(10);
@@ -44,6 +50,7 @@ void setLiftPosition(int position){
 		wait1Msec(100);
 		resetLift();
 		wait1Msec(1);
+		liftConst=true;
 	}
 
 }
