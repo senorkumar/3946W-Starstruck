@@ -200,12 +200,15 @@ task clawRightControlPID(){
 task clawLeftControlPIDDriver(){
 	while(true){
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if(vexRT[Btn5UXmtr2]==1){//open
 			setClawLeft(-127);
 		}
 		else if(vexRT[Btn5DXmtr2] ==1){//close
 			setClawLeft(127);
 =======
+=======
+>>>>>>> parent of 63779b1... auton, new drive functions, throw task
 		if(vexRT[Btn6UXmtr2]==1){//open
 			clawLeftSetPosition(clawLeftPositionOpen);
 			clawRightSetPosition(clawRightPositionOpen);
@@ -316,8 +319,11 @@ task autonomous()
 	startTask(clawRightControlPID);
 	wait1Msec(1);
 	auton_fence();
+<<<<<<< HEAD
 >>>>>>> parent of 63779b1... auton, new drive functions, throw task
 
+=======
+>>>>>>> parent of 63779b1... auton, new drive functions, throw task
 
 	}
 }
