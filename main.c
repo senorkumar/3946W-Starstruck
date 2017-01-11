@@ -44,8 +44,8 @@
 void pre_auton()
 {
 	nMotorEncoder[liftLeftOut] = 0;
-	nMotorEncoder[driveLeft] = 0;
-	nMotorEncoder[driveRight] = 0;
+	SensorValue(driveLeftQuad) = 0;
+	SensorValue(driveRightQuad) = 0;
 	resetDriveSensors();
 
 	// Set bStopTasksBetweenModes to false if you want to keep user created tasks
@@ -200,7 +200,7 @@ task clawRightControlPID(){
 
 task clawControl(){
 	while(true){
-		if(vexRT[Btn6UXmtr2]==1){//open
+		if(vexRT[Btn6UXmtr2]==1 || (nMotorEncoder[liftLeftOut]>liftPositionThrow)){//open
 			clawLeftSetPosition(clawLeftPositionOpen);
 			clawRightSetPosition(clawRightPositionOpen);
 		}
@@ -220,8 +220,9 @@ task autonomous()
 	startTask(liftControlAuton);
 	startTask(clawLeftControlPID);
 	startTask(clawRightControlPID);
+	startTask(clawControl);
 	wait1Msec(1);
-	auton_fence();
+	auton_fencecube();
 
 }
 
