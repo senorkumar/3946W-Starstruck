@@ -1,9 +1,8 @@
 int liftPositionBottom = 0;
 int liftPositionMid = 300;
 int liftPositionStart = 800;
-int liftPositionTop = 1100;
+int liftPositionTop = 1000;
 int liftPositionFence = 800;
-int liftPositionThrow = 900;
 
 bool liftConst = true;
 void setLiftLeft(int speed){

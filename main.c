@@ -44,8 +44,8 @@
 void pre_auton()
 {
 	nMotorEncoder[liftLeftOut] = 0;
-	SensorValue(driveLeftQuad) = 0;
-	SensorValue(driveRightQuad) = 0;
+	nMotorEncoder[driveLeft] = 0;
+	nMotorEncoder[driveRight] = 0;
 	resetDriveSensors();
 
 	// Set bStopTasksBetweenModes to false if you want to keep user created tasks
@@ -199,11 +199,17 @@ task clawRightControlPID(){
 }
 task clawLeftControlPIDDriver(){
 	while(true){
+<<<<<<< HEAD
 		if(vexRT[Btn5UXmtr2]==1){//open
 			setClawLeft(-127);
 		}
 		else if(vexRT[Btn5DXmtr2] ==1){//close
 			setClawLeft(127);
+=======
+		if(vexRT[Btn6UXmtr2]==1){//open
+			clawLeftSetPosition(clawLeftPositionOpen);
+			clawRightSetPosition(clawRightPositionOpen);
+>>>>>>> parent of 63779b1... auton, new drive functions, throw task
 		}
 		else{
 			if(vexRT[Btn8RXmtr2]==1){
@@ -252,6 +258,7 @@ task clawLeftControlPIDDriver(){
 }
 
 
+<<<<<<< HEAD
 task clawRightControlPIDDriver(){
 	while(true){
 		if(vexRT[Btn6UXmtr2]==1){//open
@@ -301,6 +308,15 @@ task clawRightControlPIDDriver(){
 			wait1Msec(10);
 
 		}
+=======
+task autonomous()
+{
+	startTask(liftControlAuton);
+	startTask(clawLeftControlPID);
+	startTask(clawRightControlPID);
+	wait1Msec(1);
+	auton_fence();
+>>>>>>> parent of 63779b1... auton, new drive functions, throw task
 
 
 	}
