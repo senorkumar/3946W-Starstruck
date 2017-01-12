@@ -3,8 +3,14 @@ int liftPositionMid = 300;
 int liftPositionStart = 800;
 int liftPositionTop = 1000;
 int liftPositionFence = 800;
+int liftPositionThrow = 900;
 
 bool liftConst = true;
+
+void resetLiftEncoder(){
+	SensorValue(liftQuad) = 0;
+}
+
 void setLiftLeft(int speed){
 	motor[liftLeftMid]= speed;
 	motor[liftLeftOut] = speed;

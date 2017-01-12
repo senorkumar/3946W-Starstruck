@@ -1,6 +1,6 @@
 int clawLeftPositionBack = 0;
 int clawLeftPositionOpen = 1750;
-int clawLeftPositionClosed= 3550;
+int clawLeftPositionClosed= 3750;
 
 float kP_CL=0.09;
 float kI_CL = 0.0;
@@ -13,6 +13,8 @@ int currentPosition_CL = SensorValue(clawLeftPot);
 int setPosition_CL = currentPosition_CL;
 int lastCurrentPosition_CL = currentPosition_CL;
 int integralCap_CL = 200;
+
+bool runPID_CL = true;
 
 void setClawLeft(int speed){
 	motor[clawLeft]= speed;
