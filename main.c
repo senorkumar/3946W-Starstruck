@@ -109,7 +109,7 @@ task liftControl(){
 		//else if (vexRT[Btn6D]==1){
 		//	setLiftPosition(liftPositionBottom);
 		//}
-		else if(vexRT[Btn8RXmtr2]==1){
+		else if(vexRT[Btn7LXmtr2]==1 || vexRT[Btn7D]==1){
 			setLiftPosition(liftPositionMid);
 		}
 		else{
@@ -129,8 +129,8 @@ task liftControlAuton(){
 			setLift(10);
 		}
 		if(SensorValue(liftQuad)>liftPositionThrow){
-			 clawLeftSetPosition(clawLeftPositionOpen);
-			 clawRightSetPosition(clawRightPositionOpen);
+			clawLeftSetPosition(clawLeftPositionOpen);
+			clawRightSetPosition(clawRightPositionOpen);
 
 		}
 		wait1Msec(1);
@@ -278,7 +278,7 @@ task autonomous()
 	startTask(clawLeftControlPID);
 	startTask(clawRightControlPID);
 	wait1Msec(1);
-	auton_fencecube();
+	auton_fence_doublestar();
 
 }
 
@@ -290,11 +290,5 @@ task usercontrol()
 	startTask(clawLeftControlPID);
 	startTask(clawRightControlPID);
 
-
-
-
-	while(true){
-
-	}
 	// User control code here, inside the loop
 }

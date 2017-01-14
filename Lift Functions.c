@@ -1,9 +1,11 @@
 int liftPositionBottom = 0;
 int liftPositionMid = 300;
-int liftPositionStart = 800;
+int liftPositionStart = 850;
 int liftPositionTop = 1000;
 int liftPositionFence = 800;
 int liftPositionThrow = 900;
+int liftPositionHandoff = 700;
+int liftPositionTop2Cubes = 1100;
 
 bool liftConst = true;
 
@@ -49,7 +51,7 @@ void setLiftPosition(int position){
 	else{
 		liftConst =false;
 		while(position<nMotorEncoder[liftLeftOut]){
-			setLift(-127);
+			setLift(-80);
 			wait1Msec(10);
 		}
 		setLift(10);

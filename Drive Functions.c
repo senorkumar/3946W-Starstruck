@@ -1,5 +1,5 @@
 int driveTurn90 = 510;
-int driveTurn180 = 0;
+int driveTurn180 = 1030;
 void setDriveLeft(int speed) // sets left side of drive to speed
 {
 	motor[port3] = speed;
