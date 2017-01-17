@@ -278,7 +278,7 @@ task autonomous()
 	startTask(clawLeftControlPID);
 	startTask(clawRightControlPID);
 	wait1Msec(1);
-	auton_fence_doublestar();
+	auton_fencecube();
 
 }
 

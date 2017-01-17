@@ -23,17 +23,17 @@ void auton_fencecube(){ // hit stars off fence, then picks up cube
 	clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
 	setLiftPosition(liftPositionStart);
-	wait1Msec(100);
+	wait1Msec(500);
 	setDriveForwardDistance(2600,1); // end here for bryan
-	wait1Msec(100);
+	wait1Msec(200);
 	setDriveForwardDistance(-1650,-1);
-	wait1Msec(100);//was 300
+	wait1Msec(300);//was 300
 	setLiftPosition(liftPositionMid);
-	wait1Msec(200);//was 300
+	wait1Msec(300);//was 300
 	setDriveTurn(driveTurn90,1);
-	wait1Msec(100);//was 300
+	wait1Msec(300);//was 300
 	setLiftPosition(liftPositionBottom);
-	wait1Msec(100);//was 300
+	wait1Msec(300);//was 300
 	setDriveForwardDistance(1700,1);
 	wait1Msec(1);
 	clawLeftSetPosition(clawLeftPositionClosed);
@@ -42,7 +42,7 @@ void auton_fencecube(){ // hit stars off fence, then picks up cube
 	setLiftPosition(500);
 	wait1Msec(500);
 	setDriveTurn(470,1);
-	wait1Msec(100);//250
+	wait1Msec(250);//250
 	setDriveForwardDistance(-1400,-1,750);
 	wait1Msec(0);//was 500
 	setLiftPosition(liftPositionTop);
@@ -125,7 +125,7 @@ void auton_programmingskills(){
 	setLiftPosition(liftPositionBottom);
 	wait1Msec(200);
 }
-void auton_fence_doublestar(){
+void auton_fence_doublestarLeft(){
 	setDriveForwardDistance(300,1);
 	clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
@@ -152,12 +152,34 @@ void auton_fence_doublestar(){
 	wait1Msec(300);
 	setLiftPosition(1100);
 	wait1Msec(1);
-
-
-
-
-
-
+}
+void auton_fence_doublestarRight(){
+	setDriveForwardDistance(300,1);
+	clawLeftSetPosition(clawLeftPositionOpen);
+	clawRightSetPosition(clawRightPositionOpen);
+	setLiftPosition(liftPositionStart);
+	wait1Msec(700);
+	setDriveForwardDistance(2600,1); // end here for bryan
+	wait1Msec(100);
+	setDriveForwardDistance(-1650,-1);
+	wait1Msec(1000);//was 100
+	setLiftPosition(liftPositionMid);
+	wait1Msec(1000);//was 300
+	setDriveTurn(900,1);
+	wait1Msec(500);
+	setLiftPosition(liftPositionBottom);
+	setDriveForwardDistance(900,1);
+	wait1Msec(500);
+	resetLiftEncoder();
+	clawLeftSetPosition(clawLeftPositionClosed);
+	clawRightSetPosition(clawRightPositionClosed);
+	wait1Msec(800);
+	setLiftPosition(liftPositionMid);
+	wait1Msec(100);
+	setDriveForwardDistance(-2200,-1,1000);
+	wait1Msec(300);
+	setLiftPosition(1100);
+	wait1Msec(1);
 }
 void auton_test(){
 
