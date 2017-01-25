@@ -7,6 +7,14 @@ int liftPositionThrow = 900;
 int liftPositionHandoff = 700;
 int liftPositionTop2Cubes = 1100;
 
+float kP_lift = 1.1;
+float error_lift = 0;
+
+int currentPositon_lift = SensorValue(liftQuad);
+int setPosition_lift = 0;
+
+
+
 bool liftConst = true;
 
 void resetLiftEncoder(){
