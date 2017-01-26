@@ -83,20 +83,13 @@ void pre_auton()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-task driveControl(){
-
+task combinedControl(){ //drive, lift, clawinput
 	while(true){
-		//setDriveRight(vexRT[Ch3] - vexRT[Ch1]);
-		//setDriveLeft(vexRT[Ch3] + vexRT[Ch1]);
+		//driveControl
 		motor[port3] = vexRT[Ch3]+ vexRT[Ch1];
 		motor[port5] = vexRT[Ch3] -vexRT[Ch1];
-		wait1Msec(5);
 
-	}
-}
-
-task liftControl(){
-	while(true){
+		//liftControl
 		if(vexRT[Btn5U] == 1){
 			setLift(127);
 			setPosition_lift = SensorValue(liftQuad);
@@ -117,10 +110,94 @@ task liftControl(){
 		if(vexRT[Btn8UXmtr2]==1){
 			SensorValue(liftQuad) = 0;
 		}
-		wait1Msec(5);
 
+		//clawInput
+
+		if(vexRT[Btn7LXmtr2]==1){
+			runPID_CL = true;
+			clawLeftSetPosition(clawLeftPositionOpen);
+		}
+		else if(vexRT[Btn8RXmtr2]==1){
+			runPID_CL = true;
+			clawLeftSetPosition(clawLeftPositionClosed);
+		}
+		else if(vexRT[Btn5UXmtr2]==1){
+			runPID_CL=false;
+			setPosition_CL = SensorValue(clawLeftPot);
+			setClawLeft(127);
+		}
+		else if(vexRT[Btn5DXmtr2]==1){
+			runPID_CL = false;
+			setPosition_CL = SensorValue(clawLeftPot);
+			setClawLeft(-127);
+		}
+		else{
+			runPID_CL=true;
+		}
+
+		if(vexRT[Btn7LXmtr2]==1){
+			runPID_CR = true;
+			clawRightSetPosition(clawRightPositionOpen);
+		}
+		else if(vexRT[Btn8RXmtr2]==1){
+			runPID_CR = true;
+			clawRightSetPosition(clawRightPositionClosed);
+		}
+		else if(vexRT[Btn6UXmtr2]==1){
+			runPID_CR=false;
+			setPosition_CR = SensorValue(clawRightPot);
+			setClawRight(127);
+		}
+		else if(vexRT[Btn6DXmtr2]==1){
+			runPID_CR = false;
+			setPosition_CR = SensorValue(clawRightPot);
+			setClawRight(-127);
+		}
+		else{
+			runPID_CR=true;
+		}
+
+
+		wait1Msec(5);
 	}
+
 }
+// task driveControl(){
+//
+// 	while(true){
+// 		motor[port3] = vexRT[Ch3]+ vexRT[Ch1];
+// 		motor[port5] = vexRT[Ch3] -vexRT[Ch1];
+// 		wait1Msec(5);
+//
+// 	}
+// }
+
+// task liftControl(){
+// 	while(true){
+// 		if(vexRT[Btn5U] == 1){
+// 			setLift(127);
+// 			setPosition_lift = SensorValue(liftQuad);
+// 		}
+// 		else if (vexRT[Btn5D]==1){
+// 			setLift(-80);
+// 			setPosition_lift = SensorValue(liftQuad);
+// 		}
+// 		else{
+// 			currentPositon_lift = SensorValue(liftQuad);
+//
+// 			error_lift = setPosition_lift - currentPositon_lift;
+// 			int speed = kP_lift * error_lift;
+// 			setLift(speed);
+//
+// 		}
+//
+// 		if(vexRT[Btn8UXmtr2]==1){
+// 			SensorValue(liftQuad) = 0;
+// 		}
+// 		wait1Msec(5);
+//
+// 	}
+// }
 
 task liftControlAuton(){
 	while(true){
@@ -194,65 +271,66 @@ task clawRightControl(){
 
 
 
-task testInput(){
-	while(true){
-		if(vexRT[Btn7DXmtr2]==1){
-			clawRightSetPosition(clawRightPositionOpen);
-		}
-		if(vexRT[Btn7UXmtr2]==1){
-			clawRightSetPosition(clawRightPositionClosed);
-		}
-	}
-}
-task clawInput(){
-	while(true){
-		if(vexRT[Btn7LXmtr2]==1){
-			runPID_CL = true;
-			clawLeftSetPosition(clawLeftPositionOpen);
-		}
-		else if(vexRT[Btn8RXmtr2]==1){
-			runPID_CL = true;
-			clawLeftSetPosition(clawLeftPositionClosed);
-		}
-		else if(vexRT[Btn5UXmtr2]==1){
-			runPID_CL=false;
-			setPosition_CL = SensorValue(clawLeftPot);
-			setClawLeft(127);
-		}
-		else if(vexRT[Btn5DXmtr2]==1){
-			runPID_CL = false;
-			setPosition_CL = SensorValue(clawLeftPot);
-			setClawLeft(-127);
-		}
-		else{
-			runPID_CL=true;
-		}
+// task testInput(){
+// 	while(true){
+// 		if(vexRT[Btn7DXmtr2]==1){
+// 			clawRightSetPosition(clawRightPositionOpen);
+// 		}
+// 		if(vexRT[Btn7UXmtr2]==1){
+// 			clawRightSetPosition(clawRightPositionClosed);
+// 		}
+// 	}
+// }
 
-		if(vexRT[Btn7LXmtr2]==1){
-			runPID_CR = true;
-			clawRightSetPosition(clawRightPositionOpen);
-		}
-		else if(vexRT[Btn8RXmtr2]==1){
-			runPID_CR = true;
-			clawRightSetPosition(clawRightPositionClosed);
-		}
-		else if(vexRT[Btn6UXmtr2]==1){
-			runPID_CR=false;
-			setPosition_CR = SensorValue(clawRightPot);
-			setClawRight(127);
-		}
-		else if(vexRT[Btn6DXmtr2]==1){
-			runPID_CR = false;
-			setPosition_CR = SensorValue(clawRightPot);
-			setClawRight(-127);
-		}
-		else{
-			runPID_CR=true;
-		}
-
-	}
-
-}
+// task clawInput(){
+// 	while(true){
+// 		if(vexRT[Btn7LXmtr2]==1){
+// 			runPID_CL = true;
+// 			clawLeftSetPosition(clawLeftPositionOpen);
+// 		}
+// 		else if(vexRT[Btn8RXmtr2]==1){
+// 			runPID_CL = true;
+// 			clawLeftSetPosition(clawLeftPositionClosed);
+// 		}
+// 		else if(vexRT[Btn5UXmtr2]==1){
+// 			runPID_CL=false;
+// 			setPosition_CL = SensorValue(clawLeftPot);
+// 			setClawLeft(127);
+// 		}
+// 		else if(vexRT[Btn5DXmtr2]==1){
+// 			runPID_CL = false;
+// 			setPosition_CL = SensorValue(clawLeftPot);
+// 			setClawLeft(-127);
+// 		}
+// 		else{
+// 			runPID_CL=true;
+// 		}
+//
+// 		if(vexRT[Btn7LXmtr2]==1){
+// 			runPID_CR = true;
+// 			clawRightSetPosition(clawRightPositionOpen);
+// 		}
+// 		else if(vexRT[Btn8RXmtr2]==1){
+// 			runPID_CR = true;
+// 			clawRightSetPosition(clawRightPositionClosed);
+// 		}
+// 		else if(vexRT[Btn6UXmtr2]==1){
+// 			runPID_CR=false;
+// 			setPosition_CR = SensorValue(clawRightPot);
+// 			setClawRight(127);
+// 		}
+// 		else if(vexRT[Btn6DXmtr2]==1){
+// 			runPID_CR = false;
+// 			setPosition_CR = SensorValue(clawRightPot);
+// 			setClawRight(-127);
+// 		}
+// 		else{
+// 			runPID_CR=true;
+// 		}
+//
+// 	}
+//
+// }
 
 
 
@@ -267,10 +345,12 @@ task autonomous()
 
 task usercontrol()
 {
-	startTask(driveControl);
-	startTask(liftControl);
-	//startTask(clawLeftControl);
-	//startTask(clawRightControl);
+	// startTask(driveControl);
+	// startTask(liftControl);
+	startTask(clawLeftControl);
+	startTask(clawRightControl);
+	startTask(combinedControl);
+	startTask(liftThrow);
 	//startTask(testInput);
 	//startTask(clawInput);
 
