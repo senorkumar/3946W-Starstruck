@@ -15,7 +15,7 @@ int setPosition_lift = 0;
 
 
 
-bool liftConst = true;
+bool runPID_lift = true;
 
 void resetLiftEncoder(){
 	SensorValue(liftQuad) = 0;
@@ -44,29 +44,32 @@ void resetLift(){
 }
 
 void setLiftPosition(int position){
-	liftConst = false;
-	if(position>nMotorEncoder[liftLeftOut]){
-		while(position>nMotorEncoder[liftLeftOut]){
+	runPID_lift = false;
+	if(position>SensorValue(liftQuad)){
+		while(position>SensorValue(liftQuad)){
 			setLift(127);
 			wait1Msec(10);
 		}
 		setLift(-10);
 		wait1Msec(100);
 		resetLift();
+		setPosition_lift = SensorValue(liftQuad);
 		wait1Msec(1);
-		liftConst=true;
+		runPID_lift=true;
 	}
 	else{
-		liftConst =false;
-		while(position<nMotorEncoder[liftLeftOut]){
+		runPID_lift =false;
+		while(position<SensorValue(liftQuad)){
 			setLift(-80);
 			wait1Msec(10);
 		}
 		setLift(10);
 		wait1Msec(100);
 		resetLift();
+		setPosition_lift = SensorValue(liftQuad);
 		wait1Msec(1);
-		liftConst=true;
+		runPID_lift=true;
+
 	}
 
 }
