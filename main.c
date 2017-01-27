@@ -239,7 +239,7 @@ task clawLeftControl(){
 
 			speed_CL = (kP_CL * error_CL + kD_CL*derivative_CL);
 
-			setClawLeft(speed_CL);
+			setClawLeft(-speed_CL);
 
 			wait1Msec(10);
 		}
@@ -260,7 +260,7 @@ task clawRightControl(){
 
 			speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
 
-			setClawRight(speed_CR);
+			setClawRight(-speed_CR);
 
 			wait1Msec(10);
 		}
@@ -337,6 +337,12 @@ task clawRightControl(){
 
 task autonomous()
 {
+	startTask(liftControlAuton);
+	startTask(clawLeftControl);
+	startTask(clawRightControl);
+	startTask(liftThrow);
+	wait1Msec(1);
+
 
 
 	auton_fencecube();
@@ -350,7 +356,7 @@ task usercontrol()
 	startTask(clawLeftControl);
 	startTask(clawRightControl);
 	startTask(combinedControl);
-	startTask(liftThrow);
+//	startTask(liftThrow);
 	//startTask(testInput);
 	//startTask(clawInput);
 

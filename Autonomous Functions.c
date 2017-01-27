@@ -1,12 +1,21 @@
 void auton_fence(){ // hit stars off fence
 
-	setDriveForwardDistance(300,1);
-	clawLeftSetPosition(clawLeftPositionOpen);
-	clawRightSetPosition(clawRightPositionOpen);
-	setLiftPosition(liftPositionStart);
-	wait1Msec(300);
-	setDriveForwardDistance(2600,1); // end here for bryan
+	//setDriveForwardDistance(300,1);
+	//clawLeftSetPosition(clawLeftPositionOpen);
+	//clawRightSetPosition(clawRightPositionOpen);
+	//setLiftPosition(liftPositionStart);
+	//wait1Msec(300);
+	//setDriveForwardDistance(2600,1); // end here for bryan
+	clawLeftSetPosition(clawLeftPositionClosed);
+	clawRightSetPosition(clawRightPositionClosed);
+	wait1Msec(1000);
+	setDriveForwardDistance(-1000,-1);
+
+
+
+
 }
+
 
 void auton_cubepush(){
 	setDriveForwardDistance(300,1);
@@ -19,44 +28,46 @@ void auton_cubepush(){
 }
 
 void auton_fencecube(){ // hit stars off fence, then picks up cube
-	setDriveForwardDistance(300,1);
 	clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
-	setLiftPosition(liftPositionStart);
+	wait1Msec(300);
+	setDriveForwardDistance(300,1);
+	setLiftPosition(liftPositionFence);
+	wait1Msec(3000);
 	wait1Msec(500);
-	setDriveForwardDistance(2600,1); // end here for bryan
+	setDriveForwardDistance(2200,1); // end here for bryan
 	wait1Msec(200);
 	setDriveForwardDistance(-1650,-1);
 	wait1Msec(300);//was 300
-	setLiftPosition(liftPositionMid);
-	wait1Msec(300);//was 300
-	setDriveTurn(driveTurn90,1);
-	wait1Msec(300);//was 300
-	setLiftPosition(liftPositionBottom);
-	wait1Msec(300);//was 300
-	setDriveForwardDistance(1700,1);
-	wait1Msec(1);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(500);//was 1000
-	setLiftPosition(500);
-	wait1Msec(500);
-	setDriveTurn(470,1);
-	wait1Msec(250);//250
-	setDriveForwardDistance(-1400,-1,750);
-	wait1Msec(0);//was 500
-	setLiftPosition(liftPositionTop);
-	wait1Msec(300);//was 700
-	setLiftPosition(liftPositionBottom);
-	wait1Msec(200);
-	setDriveForwardDistance(1800,1);
-	wait1Msec(0);//was 1000
-	clawLeftSetPosition(3750);
-	clawRightSetPosition(150);
-	wait1Msec(750);//
-	setLiftPosition(500);
-	setDriveForwardDistance(-2000,-1,1000);
-	setLiftPosition(liftPositionTop);
+	//setLiftPosition(liftPositionMid);
+	//wait1Msec(300);//was 300
+	//setDriveTurn(driveTurn90,1);
+	//wait1Msec(300);//was 300
+	//setLiftPosition(liftPositionBottom);
+	//wait1Msec(300);//was 300
+	//setDriveForwardDistance(1700,1);
+	//wait1Msec(1);
+	//clawLeftSetPosition(clawLeftPositionClosed);
+	//clawRightSetPosition(clawRightPositionClosed);
+	//wait1Msec(500);//was 1000
+	//setLiftPosition(500);
+	//wait1Msec(500);
+	//setDriveTurn(470,1);
+	//wait1Msec(250);//250
+	//setDriveForwardDistance(-1400,-1,750);
+	//wait1Msec(0);//was 500
+	//setLiftPosition(liftPositionTop);
+	//wait1Msec(300);//was 700
+	//setLiftPosition(liftPositionBottom);
+	//wait1Msec(200);
+	//setDriveForwardDistance(1800,1);
+	//wait1Msec(0);//was 1000
+	//clawLeftSetPosition(3750);
+	//clawRightSetPosition(150);
+	//wait1Msec(750);//
+	//setLiftPosition(500);
+	//setDriveForwardDistance(-2000,-1,1000);
+	//setLiftPosition(liftPositionTop);
 
 
 }
