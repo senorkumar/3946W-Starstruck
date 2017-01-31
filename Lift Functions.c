@@ -80,6 +80,7 @@ void setLiftPosition(int position, int maxTime){
 	if(position>SensorValue(liftQuad)){
 		while(position>SensorValue(liftQuad)&& time<maxTime){
 			setLift(127);
+			wait1Msec(1);
 			time++;
 		}
 		setLift(-10);
