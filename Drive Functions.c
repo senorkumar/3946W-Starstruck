@@ -1,5 +1,5 @@
-int driveTurn90 = 510;
-int driveTurn180 = 1030;
+int driveTurn90 = 412;
+int driveTurn180 = 823;
 void setDriveLeft(int speed) // sets left side of drive to speed
 {
 	motor[port3] = speed;
@@ -74,23 +74,23 @@ void setDriveTurn(int distance, int direction){
 	SensorValue(driveRightQuad) = 0;
 	while(((abs(SensorValue(driveLeftQuad))+ abs(SensorValue(driveRightQuad)))/2)<distance) {
 		if(direction>0){
-			setDriveLeft(127);
-			setDriveRight(-127);
+			setDriveLeft(120);
+			setDriveRight(-120);
 		}
 		else{
-			setDriveLeft(-127);
-			setDriveRight(127);
+			setDriveLeft(-120);
+			setDriveRight(120);
 		}
 	}
 	if(direction>0){
-		setDriveLeft(-127);
-		setDriveRight(127);
+		setDriveLeft(-120);
+		setDriveRight(120);
 		wait1Msec(100);
 
 	}
 	else{
-		setDriveLeft(127);
-		setDriveRight(-127);
+		setDriveLeft(120);
+		setDriveRight(-120);
 		wait1Msec(100);
 
 	}

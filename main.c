@@ -98,6 +98,14 @@ task combinedControl(){ //drive, lift, clawinput
 			setLift(-80);
 			setPosition_lift = SensorValue(liftQuad);
 		}
+		else if(vexRT[Btn6U] == 1){
+			setLift(60);
+			setPosition_lift = SensorValue(liftQuad);
+		}
+		else if (vexRT[Btn6D]==1){
+			setLift(-127);
+			setPosition_lift = SensorValue(liftQuad);
+		}
 		else{
 			currentPositon_lift = SensorValue(liftQuad);
 
@@ -344,8 +352,8 @@ task autonomous()
 	wait1Msec(1);
 
 
-
-	auton_fencecube();
+	//auton_test();
+	auton_programmingskills();
 
 }
 
@@ -356,7 +364,7 @@ task usercontrol()
 	startTask(clawLeftControl);
 	startTask(clawRightControl);
 	startTask(combinedControl);
-//	startTask(liftThrow);
+	startTask(liftThrow);
 	//startTask(testInput);
 	//startTask(clawInput);
 

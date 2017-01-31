@@ -1,11 +1,10 @@
 int liftPositionBottom = 0;
-int liftPositionMid = 300;
-int liftPositionStart = 850;
+int liftPositionMid = 230;
 int liftPositionTop = 1000;
-int liftPositionFence = 490;
-int liftPositionThrow = 900;
-int liftPositionHandoff = 700;
-int liftPositionTop2Cubes = 1100;
+int liftPositionFence = 500;
+int liftPositionThrow = 600;
+
+
 
 float kP_lift = 1.1;
 float error_lift = 0;
@@ -62,6 +61,40 @@ void setLiftPosition(int position){
 		while(position<SensorValue(liftQuad)){
 			setLift(-80);
 			wait1Msec(10);
+		}
+		setLift(10);
+		wait1Msec(100);
+		resetLift();
+		setPosition_lift = SensorValue(liftQuad);
+		wait1Msec(1);
+		runPID_lift=true;
+
+	}
+
+}
+
+
+void setLiftPosition(int position, int maxTime){
+	int time = 0;
+	runPID_lift = false;
+	if(position>SensorValue(liftQuad)){
+		while(position>SensorValue(liftQuad)&& time<maxTime){
+			setLift(127);
+			time++;
+		}
+		setLift(-10);
+		wait1Msec(100);
+		resetLift();
+		setPosition_lift = SensorValue(liftQuad);
+		wait1Msec(1);
+		runPID_lift=true;
+	}
+	else{
+		runPID_lift =false;
+		while(position<SensorValue(liftQuad)&& time<maxTime){
+			setLift(-80);
+			wait1Msec(1);
+			time++;
 		}
 		setLift(10);
 		wait1Msec(100);
