@@ -1,4 +1,5 @@
 int lastLiftPosition = SensorValue(liftQuad);
 int liftPosition = SensorValue(liftQuad);
 
-int throwThreshold = 530;
+int throwThresholdFar = 530;
+int throwThresholdClose = 450;
