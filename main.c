@@ -90,6 +90,9 @@ task combinedControl(){ //drive, lift, clawinput
 		motor[port5] = vexRT[Ch3] -vexRT[Ch1];
 
 		//liftControl
+		//if(SensorValue(liftQuad)>liftPositionMax && vexRT[Btn5D]!=1){
+		//	setLiftPosition(liftPositionMax);
+		//}
 		if(vexRT[Btn5U] == 1){
 			setLift(127);
 			setPosition_lift = SensorValue(liftQuad);
@@ -99,7 +102,7 @@ task combinedControl(){ //drive, lift, clawinput
 			setPosition_lift = SensorValue(liftQuad);
 		}
 		else if(vexRT[Btn6U] == 1){
-			setLift(60);
+			setLift(50);
 			setPosition_lift = SensorValue(liftQuad);
 		}
 		else if (vexRT[Btn6D]==1){
@@ -191,11 +194,11 @@ task liftThrow(){
 
 		liftPosition = SensorValue(liftQuad);
 
-		if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
-			clawLeftSetPosition(clawLeftPositionOpen);
-			clawRightSetPosition(clawRightPositionOpen);
-		}
-		else if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
+		//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
+		//	clawLeftSetPosition(clawLeftPositionOpen);
+		//	clawRightSetPosition(clawRightPositionOpen);
+		//}
+	if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
 			clawLeftSetPosition(clawLeftPositionOpen);
 			clawRightSetPosition(clawRightPositionOpen);
 		}
