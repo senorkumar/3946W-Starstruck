@@ -97,8 +97,8 @@ task combinedControl(){ //drive, lift, clawinput
 			setLift(127);
 			setPosition_lift = SensorValue(liftQuad);
 		}
-		else if (vexRT[Btn5D]==1){
-			setLift(-80);
+		else if (vexRT[Btn5D]==1&& SensorValue(liftQuad)>-1){
+			setLift(-70);
 			setPosition_lift = SensorValue(liftQuad);
 		}
 		else if(vexRT[Btn6U] == 1){
@@ -260,6 +260,7 @@ task autonomous()
 
 	//auton_test();
 	auton_programmingskills();
+	//auton_fence_doublestarRight();
 
 }
 
