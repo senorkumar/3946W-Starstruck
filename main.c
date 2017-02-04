@@ -208,6 +208,26 @@ task liftThrow(){
 		wait1Msec(10);
 	}
 }
+
+task liftThrowAuton(){
+	while(true){
+
+		liftPosition = SensorValue(liftQuad);
+
+		//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
+		//	clawLeftSetPosition(clawLeftPositionOpen);
+		//	clawRightSetPosition(clawRightPositionOpen);
+		//}
+	if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFarAuton){
+			clawLeftSetPosition(clawLeftPositionOpen);
+			clawRightSetPosition(clawRightPositionOpen);
+		}
+
+
+		lastLiftPosition = SensorValue(liftQuad);
+		wait1Msec(10);
+	}
+}
 task clawLeftControl(){
 	while(true){
 		while(runPID_CL){
@@ -218,6 +238,10 @@ task clawLeftControl(){
 			lastCurrentPosition_CL = currentPosition_CL;
 
 			speed_CL = (kP_CL * error_CL + kD_CL*derivative_CL);
+
+			if(speed_CL<15 && speed_CL>-15){
+				speed_CL = 0;
+		  }
 
 			setClawLeft(-speed_CL);
 
@@ -239,6 +263,10 @@ task clawRightControl(){
 			lastCurrentPosition_CR = currentPosition_CR;
 
 			speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
+			if(speed_CR<15 && speed_CR>-15){
+				speed_CR = 0;
+		  }
+
 
 			setClawRight(-speed_CR);
 
@@ -254,14 +282,14 @@ task autonomous()
 	startTask(liftControlAuton);
 	startTask(clawLeftControl);
 	startTask(clawRightControl);
-	startTask(liftThrow);
+	startTask(liftThrowAuton);
 	wait1Msec(1);
 
 
 	//auton_test();
 	auton_programmingskills();
 	//auton_fence_doublestarRight();
-
+	//auton_midlane_left();
 }
 
 task usercontrol()
