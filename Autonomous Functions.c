@@ -1,20 +1,19 @@
 void auton_midlane_left(){ //grabs 2 stars + cube, throw, grab 3 stars, throw
-	clawLeftSetPosition(clawLeftPositionOpen);
+setDriveForwardDistance(310,1);
+wait1Msec(100);
+clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
+	wait1Msec(700);
+	setDriveForwardDistance(1000,1);
 	wait1Msec(300);
-	setDriveForwardDistance(700,1);
-	wait1Msec(100);
-	clawLeftSetPosition(clawLeftPositionOpen);
-	clawRightSetPosition(clawRightPositionOpen);
-	wait1Msec(600);
 	clawLeftSetPosition(clawLeftPositionClosed);
 	clawRightSetPosition(clawRightPositionClosed);
 	wait1Msec(500);
 	setLiftPosition(100);
 	wait1Msec(100);
-	setDriveForwardDistance(1500,1);
+	//setDriveForwardDistance(1500,1);
 	wait1Msec(200);
-	setDriveTurn(500,1);
+	setDriveTurn(550,1);
 	wait1Msec(400);
 	setDriveForwardDistance(-1200,-1,1000);
 	wait1Msec(400);
@@ -32,8 +31,8 @@ void auton_midlane_left(){ //grabs 2 stars + cube, throw, grab 3 stars, throw
 	setDriveForwardDistance(-1600,-1);
 	wait1Msec(300);
 	setLiftPosition(liftPositionThrow);
-
-
+wait1Msec(500);
+setLiftPosition(liftPositionBottom);
 
 
 
@@ -200,24 +199,25 @@ void auton_fence_doublestarRight(){
 	wait1Msec(500);//was 100
 	setLiftPosition(liftPositionBottom);
 	wait1Msec(800);//was 300
-	setDriveTurn(740,1);
-	wait1Msec(300);//was 300
-	setDriveForwardDistance(600,1);
-	wait1Msec(300);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(900);
-	setLiftPosition(liftPositionMid);
-	wait1Msec(100);
-	setDriveForwardDistance(-1800,-1,1500);
-	wait1Msec(100);
-	setLiftPosition(liftPositionThrow);
-	wait1Msec(300);
-	setLiftPosition(liftPositionBottom);
-	wait1Msec(200);
-	setDriveForwardDistance(1000,1);
-	wait1Msec(300);
-	setDriveTurn(driveTurn90,1);
+	setDriveForwardDistance(-1000,-1);
+	//setDriveTurn(740,1);
+	//wait1Msec(300);//was 300
+	//setDriveForwardDistance(600,1);
+	//wait1Msec(300);
+	//clawLeftSetPosition(clawLeftPositionClosed);
+	//clawRightSetPosition(clawRightPositionClosed);
+	//wait1Msec(900);
+	//setLiftPosition(liftPositionMid);
+	//wait1Msec(100);
+	//setDriveForwardDistance(-1800,-1,1500);
+	//wait1Msec(100);
+	//setLiftPosition(liftPositionThrow);
+	//wait1Msec(300);
+	//setLiftPosition(liftPositionBottom);
+	//wait1Msec(200);
+	//setDriveForwardDistance(1000,1);
+	//wait1Msec(300);
+	//setDriveTurn(driveTurn90,1);
 }
 void auton_test(){
 	clawLeftSetPosition(clawLeftPositionHalf);
