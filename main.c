@@ -228,13 +228,17 @@ task liftThrowAuton(){
 	}
 }
 task clawLeftControl(){
+		clearDebugStream();
+		clearTimer(T1);
 	while(true){
 		while(runPID_CL){
-			currentPosition_CL = SensorValue(clawLeftPot);
+
+		currentPosition_CL = SensorValue(clawLeftPot);
 			error_CL=setPosition_CL-currentPosition_CL;
 
 			derivative_CL = (currentPosition_CL-lastCurrentPosition_CL/10);
 			lastCurrentPosition_CL = currentPosition_CL;
+
 
 			speed_CL = (kP_CL * error_CL + kD_CL*derivative_CL);
 
@@ -243,6 +247,23 @@ task clawLeftControl(){
 		  }
 
 			setClawLeft(-speed_CL);
+
+		int proportional_effect = kP_CL * error_CL;
+		int derivative_effect = kD_CL * derivative_CL;
+
+
+
+		writeDebugStream("%f", currentPosition_CL);
+		writeDebugStream(",");
+		writeDebugStream("%f", setPosition_CL);
+		writeDebugStream(",");
+		writeDebugStream("%f", speed_CL);
+		writeDebugStream(",");
+		writeDebugStream("%f", proportional_effect);
+		writeDebugStream(",");
+		writeDebugStream("%f", derivative_effect);
+		writeDebugStreamLine("%f", time1[T1]);
+
 
 			wait1Msec(10);
 		}
@@ -276,6 +297,31 @@ task clawRightControl(){
 
 }
 
+task grapher(){
+	clearDebugStream();
+	while(true){
+		int proportional_effect = kP_CL * error_CL;
+		int derivative_effect = kD_CL * derivative_CL;
+
+
+
+		writeDebugStream("%f", currentPosition_CL);
+		writeDebugStream(",");
+		writeDebugStream("%f", setPosition_CL);
+		writeDebugStream(",");
+		writeDebugStream("%f", speed_CL);
+		writeDebugStream(",");
+		writeDebugStream("%f", proportional_effect);
+		writeDebugStream(",");
+		writeDebugStreamLine("%f", derivative_effect);
+
+
+
+	wait1Msec(10);
+	}
+
+}
+
 task autonomous()
 {
 	startTask(liftControlAuton);
@@ -295,8 +341,9 @@ task usercontrol()
 {
 
 startTask(clawLeftControl);
-	startTask(clawRightControl);
+//	startTask(clawRightControl);
 	startTask(combinedControl);
 	startTask(liftThrow);
+	startTask(grapher);
 
 }
