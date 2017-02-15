@@ -1,11 +1,11 @@
 int clawRightPositionBack = 0;
-int clawRightPositionOpen = 1250;
+int clawRightPositionOpen = 1380;
 int clawRightPositionHalf = 870;
-int clawRightPositionClosed=380;
+int clawRightPositionClosed=530;
 
-float kP_CR=0.35;
+float kP_CR=0.25;
 float kI_CR = 0.0;
-float kD_CR = 0.35;
+float kD_CR = 0.85;
 float error_CR=0;
 float integral_CR= 0;
 float derivative_CR = 0;

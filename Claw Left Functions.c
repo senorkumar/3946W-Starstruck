@@ -3,9 +3,9 @@ int clawLeftPositionOpen = 1390;
 int clawLeftPositionHalf = 2050;
 int clawLeftPositionClosed= 410;
 
-float kP_CL=0.35;
+float kP_CL=0.25;//.35
 float kI_CL = 0.0;
-float kD_CL = 0.35;//.35
+float kD_CL = 0.85;//.35
 float error_CL=0;
 float integral_CL= 0;
 float derivative_CL = 0;
