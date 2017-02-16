@@ -1,4 +1,3 @@
-
 #pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(Sensor, in1,    clawRightPot,   sensorPotentiometer)
 #pragma config(Sensor, in2,    clawLeftPot,    sensorPotentiometer)
@@ -284,6 +283,7 @@ task clawLeftControl(){
 }
 
 task clawRightControl(){
+
 	while(true){
 		while(runPID_CR){
 
@@ -301,6 +301,12 @@ task clawRightControl(){
 			}
 
 			setClawRight(-speed_CR);
+
+			datalogDataGroupStart();
+			datalogAddValue(1,setPosition_CR);
+			datalogAddValue(2,SensorValue(clawRightPot));
+			datalogAddValue(3,-speed_CR);
+			datalogDataGroupEnd();
 
 			//int proportional_effect = kP_CL * error_CL;
 			//int derivative_effect = kD_CL * derivative_CL;
@@ -369,7 +375,8 @@ task autonomous()
 
 task usercontrol()
 {
-
+	datalogClear();
+wait1Msec(1);
 	startTask(clawLeftControl);
 	startTask(clawRightControl);
 	startTask(combinedControl);
