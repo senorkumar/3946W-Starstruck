@@ -28,6 +28,7 @@
 #include "Claw Right Functions.c"
 #include "Autonomous Functions.c"
 #include "Throw Functions.c"
+#include "LCD Functions.c"
 
 
 
