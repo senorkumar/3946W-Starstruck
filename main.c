@@ -1,5 +1,4 @@
-#pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
-#pragma config(Sensor, in1,    clawRightPot,   sensorPotentiometer)
+#pragma config(Sensor, in1,    clawRightPot,   sensorNone)
 #pragma config(Sensor, in2,    clawLeftPot,    sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  driveRightQuad, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  driveLeftQuad,  sensorQuadEncoder)
@@ -44,6 +43,91 @@
 
 void pre_auton()
 {
+	bLCDBacklight = true; // Turn on LCD Backlight
+
+	// check if the robot is disabled or enabled
+	if (nVexRCReceiveState & vrDisabled) {
+		// Disabled
+	}
+	else {
+		// Enabled
+		return; // skip LCD selection
+	}
+
+	// Display the battery level
+
+	// Code Chooser
+	while(nLCDButtons != centerButton) {
+		switch(count){
+
+		case 0:
+			displayLCDCenteredString(0, "<No Autonomous>");
+			WaitForPressAndRelease(12); // go forward to 4 if left is pressed
+			break;
+
+		case 1:
+			displayLCDCenteredString(0, "<Red Left Main>");
+			WaitForPressAndRelease();
+			break;
+
+		case 2:
+			displayLCDCenteredString(0, "<Red Left Alt>");
+			WaitForPressAndRelease();
+			break;
+
+		case 3:
+			displayLCDCenteredString(0, "<Red Right Main>");
+			WaitForPressAndRelease();
+			break;
+
+		case 4:
+			displayLCDCenteredString(0, "<Red Right Alt>");
+			WaitForPressAndRelease();
+			break;
+
+		case 5:
+			displayLCDCenteredString(0, "<Red Right E>");
+			WaitForPressAndRelease();
+			break;
+
+		case 6:
+			displayLCDCenteredString(0, "<Blue Left Main>");
+			WaitForPressAndRelease();
+			break;
+
+		case 7:
+			displayLCDCenteredString(0, "<Blue Left Alt>");
+			WaitForPressAndRelease();
+			break;
+
+		case 8:
+			displayLCDCenteredString(0, "<Blue Right Main>");
+			WaitForPressAndRelease();
+			break;
+
+		case 9:
+			displayLCDCenteredString(0, "<Blue Right Alt>");
+			WaitForPressAndRelease();
+			break;
+
+		case 10:
+			displayLCDCenteredString(0, "<Blue Right E>");
+			WaitForPressAndRelease();
+			break;
+
+		case 11:
+			displayLCDCenteredString(0, "<Prog Skills>");
+			WaitForPressAndRelease(); // go back to zero if right is pressed
+			break;
+
+		case 12:
+			displayLCDCenteredString(0, "<Test>");
+			WaitForPressAndRelease(0); // go back to zero if right is pressed
+			break;
+		}
+
+	}
+
 	SensorValue(liftQuad) = 0;
 	SensorValue(driveLeftQuad) = 0;
 	SensorValue(driveRightQuad) = 0;
@@ -120,25 +204,25 @@ task combinedControl(){ //drive, lift, clawinput
 
 
 		//clawInput
-			//left claw
+		//left claw
 
-			if(vexRT[Btn7LXmtr2]==1){
-				clawLeftSetPosition(clawLeftPositionOpen);
-			}
-			else if(vexRT[Btn5UXmtr2]==1 && SensorValue(clawLeftPot)>clawLeftPositionClosed){
-				setPosition_CL = SensorValue(clawLeftPot);
-				setClawLeft(120);
-			}
-			else if((vexRT[Btn6DXmtr2]==1) || (vexRT[Btn5DXmtr2]==1&& SensorValue(clawLeftPot)<clawLeftPositionOpen)){
-				setPosition_CL = SensorValue(clawLeftPot);
-				setClawLeft(-127);
-			}
-			else{
+		if(vexRT[Btn7LXmtr2]==1){
+			clawLeftSetPosition(clawLeftPositionOpen);
+		}
+		else if(vexRT[Btn5UXmtr2]==1 && SensorValue(clawLeftPot)>clawLeftPositionClosed){
+			setPosition_CL = SensorValue(clawLeftPot);
+			setClawLeft(120);
+		}
+		else if((vexRT[Btn6DXmtr2]==1) || (vexRT[Btn5DXmtr2]==1&& SensorValue(clawLeftPot)<clawLeftPositionOpen)){
+			setPosition_CL = SensorValue(clawLeftPot);
+			setClawLeft(-127);
+		}
+		else{
 			if(setPosition_CL<clawLeftPositionClosed){
 				setPosition_CL = clawLeftPositionClosed;
 			}
 			else if(setPosition_CL>clawLeftPositionOpen){
-			setPosition_CL = clawLeftPositionOpen;
+				setPosition_CL = clawLeftPositionOpen;
 			}
 			currentPosition_CL = SensorValue(clawLeftPot);
 			error_CL=setPosition_CL-currentPosition_CL;
@@ -156,26 +240,26 @@ task combinedControl(){ //drive, lift, clawinput
 			setClawLeft(-speed_CL);
 
 
-			}
+		}
 
-			//right claw
-			if(vexRT[Btn7LXmtr2]==1){
-				clawRightSetPosition(clawRightPositionOpen);
-			}
-			else if(vexRT[Btn5UXmtr2]==1 && SensorValue(clawRightPot)>clawRightPositionClosed){
-				setPosition_CR = SensorValue(clawRightPot);
-				setClawRight(120);
-			}
-			else if(vexRT[Btn6DXmtr2]==1 || (vexRT[Btn5DXmtr2]==1&& SensorValue(clawRightPot)<clawRightPositionOpen)){
-				setPosition_CR = SensorValue(clawRightPot);
-				setClawRight(-127);
-			}
-			else{
+		//right claw
+		if(vexRT[Btn7LXmtr2]==1){
+			clawRightSetPosition(clawRightPositionOpen);
+		}
+		else if(vexRT[Btn5UXmtr2]==1 && SensorValue(clawRightPot)>clawRightPositionClosed){
+			setPosition_CR = SensorValue(clawRightPot);
+			setClawRight(120);
+		}
+		else if(vexRT[Btn6DXmtr2]==1 || (vexRT[Btn5DXmtr2]==1&& SensorValue(clawRightPot)<clawRightPositionOpen)){
+			setPosition_CR = SensorValue(clawRightPot);
+			setClawRight(-127);
+		}
+		else{
 			if(setPosition_CR<clawRightPositionClosed){
 				setPosition_CR = clawRightPositionClosed;
 			}
 			else if(setPosition_CR>clawRightPositionOpen){
-			setPosition_CR = clawRightPositionOpen;
+				setPosition_CR = clawRightPositionOpen;
 			}
 			currentPosition_CR = SensorValue(clawRightPot);
 			error_CR=setPosition_CR-currentPosition_CR;
@@ -193,7 +277,7 @@ task combinedControl(){ //drive, lift, clawinput
 			setClawRight(-speed_CR);
 
 
-			}
+		}
 
 
 		wait1Msec(10);
@@ -351,17 +435,13 @@ task clawRightControl(){
 
 task autonomous()
 {
+
 	startTask(liftControlAuton);
 	startTask(clawLeftControl);
 	startTask(clawRightControl);
 	startTask(liftThrowAuton);
 	wait1Msec(1);
 
-
-	//auton_test();
-	//auton_programmingskills();
-	auton_fence_doublestarRight();
-	//auton_midlane_left();
 }
 
 task usercontrol()
