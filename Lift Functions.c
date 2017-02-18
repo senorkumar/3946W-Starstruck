@@ -1,6 +1,7 @@
 int liftPositionBottom = 0;
+int liftPositionStart = 180;
 int liftPositionMid = 230;
-int liftPositionTop = 1000;
+int liftPositionTop = 780;
 int liftPositionFence = 450;
 int liftPositionThrow = 630;
 

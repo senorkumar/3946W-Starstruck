@@ -1,4 +1,4 @@
-#pragma config(Sensor, in1,    clawRightPot,   sensorNone)
+#pragma config(Sensor, in1,    clawRightPot,   sensorPotentiometer)
 #pragma config(Sensor, in2,    clawLeftPot,    sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  driveRightQuad, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  driveLeftQuad,  sensorQuadEncoder)
@@ -329,7 +329,7 @@ task liftThrowAuton(){
 		//	clawLeftSetPosition(clawLeftPositionOpen);
 		//	clawRightSetPosition(clawRightPositionOpen);
 		//}
-		if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFarAuton){
+		if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
 			clawLeftSetPosition(clawLeftPositionOpen);
 			clawRightSetPosition(clawRightPositionOpen);
 		}
