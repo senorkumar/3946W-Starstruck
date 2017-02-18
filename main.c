@@ -450,60 +450,58 @@ task autonomous()
 		displayLCDCenteredString(1, "No Autonomous");
 		break;
 	case 1:
-		displayLCDCenteredString(1, "Right Stars");
-		justStarsAuto(true);
+		displayLCDCenteredString(1, "Red Left Main");
+		auton_red_left_main();
 		break;
 	case 2:
-		displayLCDCenteredString(1, "Left Stars");
-		justStarsAuto(false);
+		displayLCDCenteredString(1, "Red Left Alt");
+		auton_red_left_alt();
 		break;
 	case 3:
-		displayLCDCenteredString(1, "Cube + Stars R.");
-		cubeAndStarsAuto(true);
+		displayLCDCenteredString(1, "Red Right Main");
+		auton_red_right_main();
 		break;
 	case 4:
-		displayLCDCenteredString(1, "Cube + Stars L.");
-		cubeAndStarsAuto(false);
+		displayLCDCenteredString(1, "Red Right Alt");
+		auton_red_right_alt();
 		break;
 	case 5:
-		displayLCDCenteredString(1, "Pro. Skills");
-		programmingSkills();
+		displayLCDCenteredString(1, "Red Right E");
+		auton_red_right_E();
 		break;
 	case 6:
-		// test
-		displayLCDCenteredString(1, "Test");
-		Test();
+		displayLCDCenteredString(1, "Blue Left Main");
+		auton_blue_left_main();
 		break;
 	case 7:
 		// test
-		displayLCDCenteredString(1, "Test");
-		Test();
+		displayLCDCenteredString(1, "Blue Left Alt");
+		auton_blue_left_alt();
 		break;
 	case 8:
 		// test
-		displayLCDCenteredString(1, "Test");
-		Test();
+		displayLCDCenteredString(1, "Blue Right Main");
+		auton_blue_right_main();
 		break;
 	case 9:
 		// test
-		displayLCDCenteredString(1, "Test");
-		Test();
+		displayLCDCenteredString(1, "Blue Right Alt");
+		auton_blue_right_alt();
 		break;
 	case 10:
 		// test
-		displayLCDCenteredString(1, "Test");
-		Test();
+		displayLCDCenteredString(1, "Blue Right E");
+		auton_blue_right_E();
 		break;
 	case 11:
 		// test
-		displayLCDCenteredString(1, "Test");
-		Test();
+		displayLCDCenteredString(1, "Prog Skills");
+		auton_programmingskills();
 		break;
-
 	case 12:
 		// test
 		displayLCDCenteredString(1, "Test");
-		Test();
+		auton_test();
 		break;
 	}
 }
