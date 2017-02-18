@@ -442,6 +442,70 @@ task autonomous()
 	startTask(liftThrowAuton);
 	wait1Msec(1);
 
+	bLCDBacklight = true; // Turn on LCD Backlight
+	displayLCDCenteredString(0, "Autonomous");
+	switch(count){
+	case 0:
+		// No Autonomous
+		displayLCDCenteredString(1, "No Autonomous");
+		break;
+	case 1:
+		displayLCDCenteredString(1, "Right Stars");
+		justStarsAuto(true);
+		break;
+	case 2:
+		displayLCDCenteredString(1, "Left Stars");
+		justStarsAuto(false);
+		break;
+	case 3:
+		displayLCDCenteredString(1, "Cube + Stars R.");
+		cubeAndStarsAuto(true);
+		break;
+	case 4:
+		displayLCDCenteredString(1, "Cube + Stars L.");
+		cubeAndStarsAuto(false);
+		break;
+	case 5:
+		displayLCDCenteredString(1, "Pro. Skills");
+		programmingSkills();
+		break;
+	case 6:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+	case 7:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+	case 8:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+	case 9:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+	case 10:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+	case 11:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+
+	case 12:
+		// test
+		displayLCDCenteredString(1, "Test");
+		Test();
+		break;
+	}
 }
 
 task usercontrol()
