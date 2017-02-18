@@ -116,70 +116,86 @@ task combinedControl(){ //drive, lift, clawinput
 			setLift(speed);
 
 		}
-		//clawInput
-		if(vexRT[Btn6DXmtr2]==1){
-			runPID_CL= false;
-			runPID_CR= false;
 
-			setClawLeft(-127);
-			setClawRight(-127);
-		}
-		else{
+
+		//clawInput
 			//left claw
+
 			if(vexRT[Btn7LXmtr2]==1){
-				runPID_CL = true;
 				clawLeftSetPosition(clawLeftPositionOpen);
 			}
 			else if(vexRT[Btn5UXmtr2]==1 && SensorValue(clawLeftPot)>clawLeftPositionClosed){
-				runPID_CL=false;
 				setPosition_CL = SensorValue(clawLeftPot);
 				setClawLeft(120);
 			}
-			else if(vexRT[Btn5DXmtr2]==1&& SensorValue(clawLeftPot)<clawLeftPositionOpen){
-				runPID_CL = false;
+			else if((vexRT[Btn6DXmtr2]==1) || (vexRT[Btn5DXmtr2]==1&& SensorValue(clawLeftPot)<clawLeftPositionOpen)){
 				setPosition_CL = SensorValue(clawLeftPot);
 				setClawLeft(-127);
 			}
 			else{
-				if(setPosition_CL>clawLeftPositionOpen){
-					setPosition_CL= clawLeftPositionOpen;
-				}
-				else if(setPosition_CL<clawLeftPositionClosed){
-					setPosition_CL = clawLeftPositionClosed;
-				}
-				runPID_CL=true;
+			if(setPosition_CL<clawLeftPositionClosed){
+				setPosition_CL = clawLeftPositionClosed;
+			}
+			else if(setPosition_CL>clawLeftPositionOpen){
+			setPosition_CL = clawLeftPositionOpen;
+			}
+			currentPosition_CL = SensorValue(clawLeftPot);
+			error_CL=setPosition_CL-currentPosition_CL;
+
+			derivative_CL = (lastCurrentPosition_CL-currentPosition_CL);
+			lastCurrentPosition_CL = currentPosition_CL;
+
+
+			speed_CL = (kP_CL * error_CL + kD_CL*derivative_CL);
+
+			if(speed_CL<15 && speed_CL>-15){
+				speed_CL = 0;
+			}
+
+			setClawLeft(-speed_CL);
+
+
 			}
 
 			//right claw
 			if(vexRT[Btn7LXmtr2]==1){
-				runPID_CR = true;
 				clawRightSetPosition(clawRightPositionOpen);
 			}
 			else if(vexRT[Btn5UXmtr2]==1 && SensorValue(clawRightPot)>clawRightPositionClosed){
-				runPID_CR=false;
 				setPosition_CR = SensorValue(clawRightPot);
-				setClawRight(127);
-
+				setClawRight(120);
 			}
-			else if(vexRT[Btn5DXmtr2]==1&& SensorValue(clawRightPot)<clawRightPositionOpen){
-				runPID_CR = false;
+			else if(vexRT[Btn6DXmtr2]==1 || (vexRT[Btn5DXmtr2]==1&& SensorValue(clawRightPot)<clawRightPositionOpen)){
 				setPosition_CR = SensorValue(clawRightPot);
 				setClawRight(-127);
 			}
 			else{
-				if(setPosition_CR>clawRightPositionOpen){
-					setPosition_CR= clawRightPositionOpen;
-				}
-				else if(setPosition_CR<clawRightPositionClosed){
-					setPosition_CR = clawRightPositionClosed;
-				}
-				runPID_CR = true;
+			if(setPosition_CR<clawRightPositionClosed){
+				setPosition_CR = clawRightPositionClosed;
 			}
-		}
+			else if(setPosition_CR>clawRightPositionOpen){
+			setPosition_CR = clawRightPositionOpen;
+			}
+			currentPosition_CR = SensorValue(clawRightPot);
+			error_CR=setPosition_CR-currentPosition_CR;
+
+			derivative_CR = (lastCurrentPosition_CR-currentPosition_CR);
+			lastCurrentPosition_CR = currentPosition_CR;
 
 
+			speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
 
-		wait1Msec(15);
+			if(speed_CR<15 && speed_CR>-15){
+				speed_CR = 0;
+			}
+
+			setClawRight(-speed_CR);
+
+
+			}
+
+
+		wait1Msec(10);
 	}
 
 }
@@ -351,8 +367,8 @@ task usercontrol()
 {
 	datalogClear();
 	wait1Msec(1);
-	startTask(clawLeftControl);
-	startTask(clawRightControl);
+	//startTask(clawLeftControl);
+	//startTask(clawRightControl);
 	startTask(combinedControl);
 	startTask(liftThrow);
 	//startTask(grapher);
