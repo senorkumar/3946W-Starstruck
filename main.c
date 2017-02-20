@@ -25,10 +25,9 @@
 #include "Sensor Functions.c"
 #include "Claw Left Functions.c"
 #include "Claw Right Functions.c"
-#include "Autonomous Functions.c"
 #include "Throw Functions.c"
 #include "LCD Functions.c"
-
+#include "Autonomous Functions.c"
 
 
 /*---------------------------------------------------------------------------*/
@@ -43,6 +42,7 @@
 
 void pre_auton()
 {
+
 	bLCDBacklight = true; // Turn on LCD Backlight
 
 	// check if the robot is disabled or enabled
@@ -127,6 +127,19 @@ void pre_auton()
 		}
 
 	}
+displayLCDCenteredString(0, "Calibrating gyro");
+displayLCDCenteredString(1, "DO NOT MOVE");
+wait1Msec(1000);
+SensorType[in8] = sensorNone;
+ wait1Msec(1000);
+ //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
+ SensorType[in8] = sensorGyro;
+ wait1Msec(2000);
+ SensorScale[in8] = 139;
+
+ clearLCDLine(0);
+ clearLCDLine(1);
+ wait1Msec(1);
 
 	SensorValue(liftQuad) = 0;
 	SensorValue(driveLeftQuad) = 0;
@@ -329,7 +342,7 @@ task liftThrowAuton(){
 		//	clawLeftSetPosition(clawLeftPositionOpen);
 		//	clawRightSetPosition(clawRightPositionOpen);
 		//}
-		if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
+		if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar && runThrow){
 			clawLeftSetPosition(clawLeftPositionOpen);
 			clawRightSetPosition(clawRightPositionOpen);
 		}

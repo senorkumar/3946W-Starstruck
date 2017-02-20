@@ -75,20 +75,20 @@ void auton_blue_left_main(){
 	clawLeftSetPosition(clawLeftPositionClosed);
 	clawRightSetPosition(clawRightPositionClosed);
 	wait1Msec(300);
-	setLiftPosition(300);
+	setLiftPosition(350);
 	wait1Msec(500);
-	setDriveTurn(250,1);
+	gyroTurn("r",120,1,15);
 	wait1Msec(500);
-	setDriveForwardDistance(-600,-1);
-	setDrive(-127);
+	setDriveForwardDistance(-500,-1,1000);
+	wait1Msec(1);
+	setDrive(-50);
 	wait1Msec(300);
 	setLiftPosition(liftPositionTop);
 	wait1Msec(300);
 	setLiftPosition(liftPositionBottom);
 	wait1Msec(1);
 	setDrive(0);
-	setDriveForwardDistance(-600,-1,1000);
-	wait1Msec(1);
+	wait1Msec(10);
 	setDriveForwardDistance(500,1);
 	clawLeftSetPosition(clawLeftPositionClosed);
 	clawRightSetPosition(clawRightPositionClosed);
@@ -107,6 +107,29 @@ void auton_blue_left_main(){
 }
 
 void auton_blue_left_alt(){
+	runThrow = false;
+	clawLeftSetPosition(clawLeftPositionFlat);
+	clawRightSetPosition(clawRightPositionFlat);
+	setLiftPosition(480);
+	setDriveForwardDistance(600,1);
+	wait1Msec(300);
+	setDriveForwardDistance(-300,-1);
+	wait1Msec(100);
+	setLiftPosition(0);
+	wait1Msec(300);
+	gyroTurn("l",180,1,15);
+	setDriveForwardDistance(250,1);
+	clawLeftSetPosition(clawLeftPositionClosed);
+	clawRightSetPosition(clawRightPositionClosed);
+	wait1Msec(500);
+	runThrow=true;
+	setLiftPosition(200);
+	setDriveForwardDistance(-500,-1);
+	setLiftPosition(liftPositionTop);
+
+
+
+
 }
 
 void auton_blue_right_main(){
@@ -119,125 +142,40 @@ void auton_blue_right_E(){
 }
 
 void auton_programmingskills(){
+	setDriveForwardDistance(-200,-1);
 	clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
-	wait1Msec(100);
-	setLiftPosition(liftPositionFence);
+	wait1Msec(800);
+	setDriveForwardDistance(100,1);
 	wait1Msec(1000);
-	setDriveForwardDistance(2500,1);
-	wait1Msec(500);
-	setDriveForwardDistance(-1550,-1);
-	wait1Msec(500);//was 100
+	clawLeftSetPosition(clawLeftPositionPreloadClosed);
+	clawRightSetPosition(clawRightPositionPreloadClosed);
+	wait1Msec(300);
+	setLiftPosition(200);
+	setDriveForwardDistance(-550,-1);
+	setDrive(-50);
+	setLiftPosition(liftPositionTop);
+	wait1Msec(100);
 	setLiftPosition(liftPositionBottom);
-	wait1Msec(500);//was 300
-	setDriveTurn(driveTurn180,1);
-	wait1Msec(500);//was 300
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
+	setDrive(0);
 	wait1Msec(500);
-	setLiftPosition(liftPositionMid);
+	SensorValue(liftQuad) = 0;
+	setDriveForwardDistance(550,1);
 	wait1Msec(1000);
-	setDriveForwardDistance(-1800,-1,1300);
-	wait1Msec(500);
-	setLiftPosition(liftPositionThrow);
-	wait1Msec(500);
-	setLiftPosition(liftPositionBottom);
-	setDriveForwardDistance(1700,1);
-	wait1Msec(500);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(500);
-	setLiftPosition(liftPositionMid,500);
-	wait1Msec(1000);
-	setDriveForwardDistance(-1700,-1,1300);
-	wait1Msec(200);
-	setLiftPosition(liftPositionThrow);
-	wait1Msec(500);
-	setLiftPosition(liftPositionBottom);
-	clawLeftSetPosition(clawLeftPositionHalf);
-	clawRightSetPosition(clawRightPositionHalf);
-	wait1Msec(100);
-	setDriveForwardDistance(-20,-1);
-	wait1Msec(1000);
-	setDriveForwardDistance(140,1);
-	wait1Msec(500);
-	setDriveTurn(driveTurn90,-1);
-	wait1Msec(100);
-	setDriveForwardDistance(3400,1);
-	clawLeftSetPosition(clawLeftPositionOpen);
-	clawRightSetPosition(clawRightPositionOpen);
-	wait1Msec(1);
-	setDriveForwardDistance(600,1);
-	wait1Msec(1);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(600);
-	setLiftPosition(liftPositionMid,1000);
-	wait1Msec(1000);
-	setDriveForwardDistance(-150,-1);
-	wait1Msec(100);
-	setDriveTurn(360,1);
-	wait1Msec(500);
-	setDriveForwardDistance(-400,-1,500);
-	wait1Msec(500);
-	setLiftPosition(liftPositionThrow);
+	clawLeftSetPosition(clawLeftPositionPreloadClosed);
+	clawRightSetPosition(clawRightPositionPreloadClosed);
 	wait1Msec(300);
-	setLiftPosition(liftPositionBottom);
-	wait1Msec(100);
-	setDriveForwardDistance(-400,-1,500);
-	wait1Msec(500);
-	setDriveForwardDistance(1475,1);
-	wait1Msec(100);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(600);
-	setLiftPosition(liftPositionMid,1000);
-	wait1Msec(10);
-	setDriveForwardDistance(-2300,-1,2000);
-	wait1Msec(1);
-	setLiftPosition(liftPositionThrow);
-	wait1Msec(300);
-	setLiftPosition(liftPositionBottom);
-	clawLeftSetPosition(clawLeftPositionOpen);
-	clawRightSetPosition(clawRightPositionOpen);
-	wait1Msec(1000);
-	setDriveForwardDistance(985,1);
-	wait1Msec(300);
-	setDriveTurn(driveTurn90,1);
-	wait1Msec(300);
-	setDriveForwardDistance(-1300,-1,1500);
-	wait1Msec(300);
-	setDriveForwardDistance(2300,1);
-	wait1Msec(300);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(500);
-	setLiftPosition(liftPositionMid);
-	wait1Msec(300);
-	setDriveTurn(430,-1);
-	wait1Msec(300);
-	setDriveForwardDistance(-900,-1,1000);
-	wait1Msec(100);
-	setLiftPosition(liftPositionThrow);
-	wait1Msec(300);
-	setLiftPosition(liftPositionBottom);
-	wait1Msec(300);
-	setDriveForwardDistance(-300,-1,1000);
-	wait1Msec(300);
-	setDriveForwardDistance(1500,1);
-	wait1Msec(100);
-	clawLeftSetPosition(clawLeftPositionClosed);
-	clawRightSetPosition(clawRightPositionClosed);
-	wait1Msec(500);
-	setLiftPosition(liftPositionMid);
-	wait1Msec(100);
-	setDriveForwardDistance(-1500,-1);
-	wait1Msec(300);
-	setLiftPosition(liftPositionThrow);
+	setLiftPosition(200);
+	setDriveForwardDistance(-550,-1);
+	setDrive(-50);
+	setLiftPosition(liftPositionTop);
+
+
 }
 
 
 void auton_test(){
-	setLiftPosition(270);
-	setDriveTurn(270,1);
+	clawLeftSetPosition(clawLeftPositionFlat);
+	clawRightSetPosition(clawRightPositionFlat);
+
 }
