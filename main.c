@@ -64,7 +64,7 @@ void pre_auton()
 
 		case 0:
 			displayLCDCenteredString(0, "<No Autonomous>");
-			WaitForPressAndRelease(12); // go forward to 4 if left is pressed
+			WaitForPressAndRelease(14); // go forward to 4 if left is pressed
 			break;
 
 		case 1:
@@ -78,70 +78,78 @@ void pre_auton()
 			break;
 
 		case 3:
-			displayLCDCenteredString(0, "<Red Right Main>");
+			displayLCDCenteredString(0, "<Red Left E>");
 			WaitForPressAndRelease();
 			break;
 
 		case 4:
-			displayLCDCenteredString(0, "<Red Right Alt>");
+			displayLCDCenteredString(0, "<Red Right Main>");
 			WaitForPressAndRelease();
 			break;
 
 		case 5:
-			displayLCDCenteredString(0, "<Red Right E>");
+			displayLCDCenteredString(0, "<Red Right Alt>");
 			WaitForPressAndRelease();
 			break;
 
 		case 6:
-			displayLCDCenteredString(0, "<Blue Left Main>");
+			displayLCDCenteredString(0, "<Red Right E>");
 			WaitForPressAndRelease();
 			break;
 
 		case 7:
-			displayLCDCenteredString(0, "<Blue Left Alt>");
+			displayLCDCenteredString(0, "<Blue Left Main>");
 			WaitForPressAndRelease();
 			break;
 
 		case 8:
-			displayLCDCenteredString(0, "<Blue Right Main>");
+			displayLCDCenteredString(0, "<Blue Left Alt>");
 			WaitForPressAndRelease();
 			break;
-
 		case 9:
-			displayLCDCenteredString(0, "<Blue Right Alt>");
+			displayLCDCenteredString(0, "<Blue Left E>");
 			WaitForPressAndRelease();
 			break;
 
 		case 10:
-			displayLCDCenteredString(0, "<Blue Right E>");
+			displayLCDCenteredString(0, "<Blue Right Main>");
 			WaitForPressAndRelease();
 			break;
 
 		case 11:
+			displayLCDCenteredString(0, "<Blue Right Alt>");
+			WaitForPressAndRelease();
+			break;
+
+		case 12:
+			displayLCDCenteredString(0, "<Blue Right E>");
+			WaitForPressAndRelease();
+			break;
+
+		case 13:
 			displayLCDCenteredString(0, "<Prog Skills>");
 			WaitForPressAndRelease(); // go back to zero if right is pressed
 			break;
 
-		case 12:
+		case 14:
 			displayLCDCenteredString(0, "<Test>");
 			WaitForPressAndRelease(0); // go back to zero if right is pressed
 			break;
 		}
 
 	}
-displayLCDCenteredString(0, "Calibrating gyro");
-displayLCDCenteredString(1, "DO NOT MOVE");
-wait1Msec(1000);
-SensorType[in8] = sensorNone;
- wait1Msec(1000);
- //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
- SensorType[in8] = sensorGyro;
- wait1Msec(2000);
- SensorScale[in8] = 139;
+	displayLCDCenteredString(0, "Calibrating gyro");
+	displayLCDCenteredString(1, "DO NOT MOVE");
+	wait1Msec(2000);
+	SensorType[in8] = sensorNone;
+	wait1Msec(2000);
+	//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
+	SensorType[in8] = sensorGyro;
+	wait1Msec(2000);
+	SensorScale[in8] = 139;
 
- clearLCDLine(0);
- clearLCDLine(1);
- wait1Msec(1);
+	clearLCDLine(0);
+	clearLCDLine(1);
 
 	SensorValue(liftQuad) = 0;
 	SensorValue(driveLeftQuad) = 0;
@@ -473,47 +481,56 @@ task autonomous()
 		auton_red_left_alt();
 		break;
 	case 3:
+		displayLCDCenteredString(1, "Red Left E");
+		auton_red_left_E();
+		break;
+	case 4:
 		displayLCDCenteredString(1, "Red Right Main");
 		auton_red_right_main();
 		break;
-	case 4:
+	case 5:
 		displayLCDCenteredString(1, "Red Right Alt");
 		auton_red_right_alt();
 		break;
-	case 5:
+	case 6:
 		displayLCDCenteredString(1, "Red Right E");
 		auton_red_right_E();
 		break;
-	case 6:
+	case 7:
 		displayLCDCenteredString(1, "Blue Left Main");
 		auton_blue_left_main();
 		break;
-	case 7:
+	case 8:
 		// test
 		displayLCDCenteredString(1, "Blue Left Alt");
 		auton_blue_left_alt();
 		break;
-	case 8:
+	case 9:
+		// test
+		displayLCDCenteredString(1, "Blue Left E");
+		auton_blue_left_E();
+		break;
+	case 10:
 		// test
 		displayLCDCenteredString(1, "Blue Right Main");
 		auton_blue_right_main();
 		break;
-	case 9:
+	case 11:
 		// test
 		displayLCDCenteredString(1, "Blue Right Alt");
 		auton_blue_right_alt();
 		break;
-	case 10:
+	case 12:
 		// test
 		displayLCDCenteredString(1, "Blue Right E");
 		auton_blue_right_E();
 		break;
-	case 11:
+	case 13:
 		// test
 		displayLCDCenteredString(1, "Prog Skills");
 		auton_programmingskills();
 		break;
-	case 12:
+	case 14:
 		// test
 		displayLCDCenteredString(1, "Test");
 		auton_test();

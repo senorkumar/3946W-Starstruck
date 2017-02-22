@@ -38,6 +38,9 @@ void auton_red_left_main(){ //grabs 2 stars + cube, throw, grab 3 stars, throw
 void auton_red_left_alt(){
 }
 
+void auton_red_left_E(){
+}
+
 void auton_red_right_main(){
 }
 
@@ -113,10 +116,9 @@ void auton_blue_left_alt(){
 	setLiftPosition(200);
 	setDriveForwardDistance(-500,-1);
 	setLiftPosition(liftPositionTop);
+}
 
-
-
-
+void auton_blue_left_E(){
 }
 
 void auton_blue_right_main(){
