@@ -43,16 +43,18 @@
 void pre_auton()
 {
 
+
+
 	bLCDBacklight = true; // Turn on LCD Backlight
 
 	// check if the robot is disabled or enabled
-	if (nVexRCReceiveState & vrDisabled) {
-		// Disabled
-	}
-	else {
-		// Enabled
-		return; // skip LCD selection
-	}
+	//if (nVexRCReceiveState & vrDisabled) {
+	//	// Disabled
+	//}
+	//else {
+	//	// Enabled
+	//	return; // skip LCD selection
+	//}
 
 	// Display the battery level
 

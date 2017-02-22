@@ -42,20 +42,7 @@ void auton_red_right_main(){
 }
 
 void auton_red_right_alt(){
-	setDriveTurn(45,1);
-	wait1Msec(100);
-	clawLeftSetPosition(clawLeftPositionOpen);
-	clawRightSetPosition(clawRightPositionOpen);
-	wait1Msec(100);
-	setLiftPosition(liftPositionFence);
-	wait1Msec(1500);
-	setDriveForwardDistance(2300,1);
-	wait1Msec(800);
-	setDriveForwardDistance(-1350,-1);
-	wait1Msec(500);//was 100
-	setLiftPosition(liftPositionBottom);
-	wait1Msec(800);//was 300
-	setDriveForwardDistance(-1000,-1);
+
 }
 
 void auton_red_right_E(){
@@ -136,6 +123,27 @@ void auton_blue_right_main(){
 }
 
 void auton_blue_right_alt(){
+	runThrow = false;
+	clawLeftSetPosition(clawLeftPositionFlat);
+	clawRightSetPosition(clawRightPositionFlat);
+	setLiftPosition(480);
+	setDriveForwardDistance(600,1);
+	wait1Msec(300);
+	setDriveForwardDistance(-300,-1);
+	wait1Msec(100);
+	setLiftPosition(0);
+	wait1Msec(300);
+	gyroTurn("r",180,1,15);
+	setDriveForwardDistance(250,1);
+	clawLeftSetPosition(clawLeftPositionClosed);
+	clawRightSetPosition(clawRightPositionClosed);
+	wait1Msec(500);
+	runThrow=true;
+	setLiftPosition(200);
+	setDriveForwardDistance(-500,-1);
+	setLiftPosition(liftPositionTop);
+
+
 }
 
 void auton_blue_right_E(){
