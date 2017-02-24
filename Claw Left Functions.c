@@ -1,5 +1,5 @@
 int clawLeftPositionOpen = 1550;
-int clawLeftPositionHalf = 800;
+int clawLeftPositionHalf = 880;
 int clawLeftPositionE = 830;
 int clawLeftPositionClosed= 540;
 int clawLeftPositionFlat = 1940;
