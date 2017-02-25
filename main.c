@@ -209,7 +209,7 @@ task combinedControl(){ //drive, lift, clawinput
 			setPosition_lift = SensorValue(liftQuad);
 		}
 		else if(vexRT[Btn6U] == 1){
-			setLift(50);
+			setLift(60);
 			setPosition_lift = SensorValue(liftQuad);
 		}
 		else if(vexRT[Btn6D]==1){

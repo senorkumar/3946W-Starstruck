@@ -77,6 +77,37 @@ void setLiftPosition(int position){
 
 }
 
+void setLiftPositionSlow(int position){
+	runPID_lift = false;
+	if(position>SensorValue(liftQuad)){
+		while(position>SensorValue(liftQuad)){
+			setLift(60);
+			wait1Msec(10);
+		}
+		setLift(-10);
+		wait1Msec(100);
+		resetLift();
+		setPosition_lift = SensorValue(liftQuad);
+		wait1Msec(1);
+		runPID_lift=true;
+	}
+	else{
+		runPID_lift =false;
+		while(position<SensorValue(liftQuad)){
+			setLift(-80);
+			wait1Msec(10);
+		}
+		setLift(10);
+		wait1Msec(100);
+		resetLift();
+		setPosition_lift = SensorValue(liftQuad);
+		wait1Msec(1);
+		runPID_lift=true;
+
+	}
+
+}
+
 
 void setLiftPosition(int position, int maxTime){
 	int time = 0;
