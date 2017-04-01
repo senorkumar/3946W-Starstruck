@@ -293,7 +293,7 @@ task combinedControl(){ //drive, lift, clawinput
 
 			speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
 
-			if(speed_CR<15 && speed_CR>-15){
+			if(speed_CR<20 && speed_CR>-20){
 				speed_CR = 0;
 			}
 
