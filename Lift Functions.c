@@ -25,16 +25,16 @@ void resetLiftEncoder(){
 }
 
 void setLiftLeft(int speed){
-	motor[liftLeftMid]= speed;
-	motor[liftLeftOut] = speed;
-	motor[liftLeftTop] = speed;
+	motor[liftLeftMiddle]= speed;
+	motor[liftLeftBottomOutside] = speed;
+	motor[liftLeftTopOutside] = speed;
 
 }
 
 void setLiftRight(int speed){
-	motor[liftRightMid]= speed;
-	motor[liftRightOut] = speed;
-	motor[liftRightTop] = speed;
+	motor[liftRightMiddle]= speed;
+	motor[liftRightBottomOutside] = speed;
+	motor[liftRightTopOutside] = speed;
 }
 
 void setLift(int speed){

@@ -6,7 +6,7 @@ int clawRightPositionFlat = 2180;
 int clawRightPositionPreloadClosed = 780;
 
 
-float kP_CR=0.25;
+float kP_CR=0.1;
 float kI_CR = 0.0;
 float kD_CR = 0.85;
 float error_CR=0;
