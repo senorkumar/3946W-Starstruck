@@ -10,7 +10,7 @@ int liftPositionMax = 650;
 
 
 
-float kP_lift = 1.1;
+float kP_lift = 0.7;
 float error_lift = 0;
 
 int currentPositon_lift = SensorValue(liftQuad);

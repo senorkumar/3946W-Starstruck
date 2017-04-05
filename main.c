@@ -202,11 +202,11 @@ task combinedControl(){ //drive, lift, clawinput
 
 		if(vexRT[Btn5U] == 1 && (SensorValue(liftQuad)<780|| vexRT[Btn8UXmtr2])){
 			setLift(127);
-			setPosition_lift = SensorValue(liftQuad);
+			setPosition_lift = SensorValue(liftQuad)+30;
 		}
 		else if (vexRT[Btn5D]==1&& SensorValue(liftQuad)>-1){
 			setLift(-127);
-			setPosition_lift = SensorValue(liftQuad);
+			setPosition_lift = SensorValue(liftQuad)-30;
 		}
 		else{
 			currentPositon_lift = SensorValue(liftQuad);
@@ -221,7 +221,7 @@ task combinedControl(){ //drive, lift, clawinput
 		//clawInput
 		//left claw
 
-		if(vexRT[Btn6U]&&SensorValue(clawLeftPot)<3840){
+		if(vexRT[Btn6U]){
 			motor[clawLeft] = 127;
 			setPosition_CL = SensorValue(clawLeftPot);
 		}
