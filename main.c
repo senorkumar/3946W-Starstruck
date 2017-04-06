@@ -214,123 +214,34 @@ task combinedControl(){ //drive, lift, clawinput
 			error_lift = setPosition_lift - currentPositon_lift;
 			int speed = kP_lift * error_lift;
 			setLift(speed);
-
 		}
 
+		//Claw Contol
 
-		//clawInput
-		//left claw
-		//if(vexRT[Btn7L]==1){
-		//	clawLeftSetPosition(clawLeftPositionOpen);
-		//}
-		//else if(vexRT[Btn6U]==1 && SensorValue(clawLeftPot)>clawLeftPositionOpen){
-		//	setPosition_CL = SensorValue(clawLeftPot);
-		//	setClawLeft(127);
-		//}
-		//else if(vexRT[Btn6D]==1 && SensorValue(clawLeftPot)<clawLeftPositionClosed){
-		//	setPosition_CL = SensorValue(clawLeftPot);
-		//	setClawLeft(-127);
-		//}
-		//else{
-		//	if(setPosition_CL>clawLeftPositionClosed){
-		//		setPosition_CL = clawLeftPositionClosed;
-		//	}
-		//	else if(setPosition_CL<clawLeftPositionOpen){
-		//		setPosition_CL = clawLeftPositionOpen;
-		//	}
-		//	currentPosition_CL = SensorValue(clawLeftPot);
-		//	error_CL=setPosition_CL-currentPosition_CL;
-
-		//	derivative_CL = (lastCurrentPosition_CL-currentPosition_CL);
-		//	lastCurrentPosition_CL = currentPosition_CL;
-
-
-		//	speed_CL = (kP_CL * error_CL + kD_CL*derivative_CL);
-
-		//	if(speed_CL<15 && speed_CL>-15){
-		//		speed_CL = 0;
-		//	}
-
-		//	setClawLeft(-speed_CL);
-
-
-		//}
-
-		// right claw
-		//if(vexRT[Btn7L]==1){
-		//	clawRightSetPosition(clawRightPositionOpen);
-		//}
-		//else if(vexRT[Btn6U]==1 && SensorValue(clawRightPot)>clawRightPositionOpen){
-		//	setPosition_CR = SensorValue(clawRightPot);
-		//	setClawRight(127);
-		//}
-		//else if(vexRT[Btn6D]==1 && SensorValue(clawRightPot)<clawRightPositionClosed){
-		//	setPosition_CR = SensorValue(clawRightPot);
-		//	setClawRight(-127);
-		//}
-		//else{
-		//	if(setPosition_CR>clawRightPositionClosed){
-		//		setPosition_CR = clawRightPositionClosed;
-		//	}
-		//	else if(setPosition_CR<clawRightPositionOpen){
-		//		setPosition_CR = clawRightPositionOpen;
-		//	}
-		//	currentPosition_CR = SensorValue(clawRightPot);
-		//	error_CR=setPosition_CR-currentPosition_CR;
-
-		//	derivative_CR = (lastCurrentPosition_CR-currentPosition_CR);
-		//	lastCurrentPosition_CR = currentPosition_CR;
-
-
-		//	speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
-
-		//	if(speed_CR<15 && speed_CR>-15){
-		//		speed_CR = 0;
-		//	}
-
-		//	setClawRight(-speed_CR);
-
-		//}
-		if(vexRT[Btn7L]==1){
-			clawRightSetPosition(clawRightPositionOpen);
+		if(vexRT[Btn6U] == 1){
+			motor[clawLeft] = 127;
+			motor[clawRight] = 127;
+			currentPosition_CL = SensorValue[clawLeftPot] + 1;
+			currentPosition_CR = SensorValue[clawRightPot] + 1;
 		}
-		else if(vexRT[Btn6U]==1 && SensorValue(clawRightPot)<clawRightPositionClosed){
-			setPosition_CR = SensorValue(clawRightPot);
-			setClawRight(127);
+		else if(vexRT[Btn6D] == 1){
+			motor[clawLeft] = -127;
+			motor[clawRight] = -127;
+			currentPosition_CL = SensorValue[clawLeftPot] - 1;
+			currentPosition_CR = SensorValue[clawRightPot] - 1;
 		}
-		else if(vexRT[Btn6D]==1&& SensorValue(clawRightPot)>clawRightPositionOpen){
-			setPosition_CR = SensorValue(clawRightPot);
-			setClawRight(-127);
+		else if(vexRT[Btn8RXmtr2] == 1 || SensorValue[liftQuad] > 500){
+			currentPosition_CL = clawLeftPositionOpen;
+			currentPosition_CR = clawRightPositionOpen;
+			clawLeftControlPID(currentPosition_CL);
+			clawRightControlPID(currentPosition_CR);
 		}
 		else{
-			if(setPosition_CR<clawRightPositionClosed){
-				setPosition_CR = clawRightPositionClosed;
-			}
-			else if(setPosition_CR>clawRightPositionOpen){
-				setPosition_CR = clawRightPositionOpen;
-			}
-			currentPosition_CR = SensorValue(clawRightPot);
-			error_CR=setPosition_CR-currentPosition_CR;
-
-			derivative_CR = (lastCurrentPosition_CR-currentPosition_CR);
-			lastCurrentPosition_CR = currentPosition_CR;
-
-
-			speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
-
-			if(speed_CR<15 && speed_CR>-15){
-				speed_CR = 0;
-			}
-
-			setClawRight(-speed_CR);
-
-
+			clawLeftControlPID(currentPosition_CL);
+			clawRightControlPID(currentPosition_CR);
 		}
-
-
 		wait1Msec(10);
 	}
-
 }
 
 
@@ -342,235 +253,166 @@ task liftControlAuton(){
 			error_lift = setPosition_lift - currentPositon_lift;
 			int speed = kP_lift * error_lift;
 			setLift(speed);
-
 		}
-		wait1Msec(5);
 	}
+	wait1Msec(5);
 }
 
+
 task liftThrow(){
-	while(true){
+while(true){
 
-		liftPosition = SensorValue(liftQuad);
+	liftPosition = SensorValue(liftQuad);
 
-		//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
-		//	clawLeftSetPosition(clawLeftPositionOpen);
-		//	clawRightSetPosition(clawRightPositionOpen);
-		//}
-		if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
-			clawLeftSetPosition(clawLeftPositionOpen);
-			clawRightSetPosition(clawRightPositionOpen);
-		}
-
-
-		lastLiftPosition = SensorValue(liftQuad);
-		wait1Msec(10);
+	//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
+	//	clawLeftSetPosition(clawLeftPositionOpen);
+	//	clawRightSetPosition(clawRightPositionOpen);
+	//}
+	if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
+		clawLeftSetPosition(clawLeftPositionOpen);
+		clawRightSetPosition(clawRightPositionOpen);
 	}
+
+
+	lastLiftPosition = SensorValue(liftQuad);
+	wait1Msec(10);
+}
 }
 
 task liftThrowAuton(){
-	while(true){
+while(true){
 
-		liftPosition = SensorValue(liftQuad);
+	liftPosition = SensorValue(liftQuad);
 
-		//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
-		//	clawLeftSetPosition(clawLeftPositionOpen);
-		//	clawRightSetPosition(clawRightPositionOpen);
-		//}
-		if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar && runThrow){
-			clawLeftSetPosition(clawLeftPositionOpen);
-			clawRightSetPosition(clawRightPositionOpen);
-		}
-
-
-		lastLiftPosition = SensorValue(liftQuad);
-		wait1Msec(10);
-	}
-}
-task clawLeftControl(){
-	while(true){
-		while(runPID_CL){
-
-			currentPosition_CL = SensorValue(clawLeftPot);
-			error_CL=setPosition_CL-currentPosition_CL;
-
-			derivative_CL = (lastCurrentPosition_CL-currentPosition_CL);
-			lastCurrentPosition_CL = currentPosition_CL;
-
-
-			speed_CL = (kP_CL * error_CL + kD_CL*derivative_CL);
-
-			if(speed_CL<15 && speed_CL>-15){
-				speed_CL = 0;
-			}
-
-			setClawLeft(-speed_CL);
-
-			int proportional_effect = kP_CL * error_CL;
-			int derivative_effect = kD_CL * derivative_CL;
-
-
-
-			//writeDebugStream("%f", currentPosition_CL);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", setPosition_CL);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", speed_CL);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", proportional_effect);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", derivative_effect);
-			//writeDebugStreamLine("%f", time1[T1]);
-
-
-			wait1Msec(10);
-		}
-
+	//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
+	//	clawLeftSetPosition(clawLeftPositionOpen);
+	//	clawRightSetPosition(clawRightPositionOpen);
+	//}
+	if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar && runThrow){
+		clawLeftSetPosition(clawLeftPositionOpen);
+		clawRightSetPosition(clawRightPositionOpen);
 	}
 
+
+	lastLiftPosition = SensorValue(liftQuad);
+	wait1Msec(10);
+}
 }
 
-task clawRightControl(){
-
-	while(true){
-		while(runPID_CR){
-
-			currentPosition_CR = SensorValue(clawRightPot);
-			error_CR=setPosition_CR-currentPosition_CR;
-
-			derivative_CR = (lastCurrentPosition_CR-currentPosition_CR);
-			lastCurrentPosition_CR = currentPosition_CR;
-
-
-			speed_CR = (kP_CR * error_CR + kD_CR*derivative_CR);
-
-			if(speed_CR<15 && speed_CR>-15){
-				speed_CR = 0;
-			}
-
-			setClawRight(-speed_CR);
-
-			//datalogDataGroupStart();
-			//datalogAddValue(2,setPosition_CR);
-			//datalogAddValue(3,SensorValue(clawRightPot));
-			//datalogAddValue(4,-speed_CR);
-			//datalogDataGroupEnd();
-
-			//int proportional_effect = kP_CL * error_CL;
-			//int derivative_effect = kD_CL * derivative_CL;
 
 
 
-			//writeDebugStream("%f", currentPosition_CL);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", setPosition_CL);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", speed_CL);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", proportional_effect);
-			//writeDebugStream(",");
-			//writeDebugStream("%f", derivative_effect);
-			//writeDebugStreamLine("%f", time1[T1]);
+//writeDebugStream("%f", currentPosition_CL);
+//writeDebugStream(",");
+//writeDebugStream("%f", setPosition_CL);
+//writeDebugStream(",");
+//writeDebugStream("%f", speed_CL);
+//writeDebugStream(",");
+//writeDebugStream("%f", proportional_effect);
+//writeDebugStream(",");
+//writeDebugStream("%f", derivative_effect);
+//writeDebugStreamLine("%f", time1[T1]);
 
 
-			wait1Msec(10);
-		}
+//			wait1Msec(10);
+//		}
 
-	}
+//	}
 
-}
+//}
+
 
 
 task autonomous()
 {
 
-	startTask(liftControlAuton);
-	startTask(clawLeftControl);
-	startTask(clawRightControl);
-	startTask(liftThrowAuton);
-	wait1Msec(1);
+startTask(liftControlAuton);
+//startTask(clawLeftControl);
+//startTask(clawRightControl);
+startTask(liftThrowAuton);
+wait1Msec(1);
 
-	bLCDBacklight = true; // Turn on LCD Backlight
-	displayLCDCenteredString(0, "Autonomous");
-	switch(count){
-	case 0:
-		// No Autonomous
-		displayLCDCenteredString(1, "No Autonomous");
-		break;
-	case 1:
-		displayLCDCenteredString(1, "Red Left Main");
-		auton_red_left_main();
-		break;
-	case 2:
-		displayLCDCenteredString(1, "Red Left Alt");
-		auton_red_left_alt();
-		break;
-	case 3:
-		displayLCDCenteredString(1, "Red Left E");
-		auton_red_left_E();
-		break;
-	case 4:
-		displayLCDCenteredString(1, "Red Right Main");
-		auton_red_right_main();
-		break;
-	case 5:
-		displayLCDCenteredString(1, "Red Right Alt");
-		auton_red_right_alt();
-		break;
-	case 6:
-		displayLCDCenteredString(1, "Red Right E");
-		auton_red_right_E();
-		break;
-	case 7:
-		displayLCDCenteredString(1, "Blue Left Main");
-		auton_blue_left_main();
-		break;
-	case 8:
-		// test
-		displayLCDCenteredString(1, "Blue Left Alt");
-		auton_blue_left_alt();
-		break;
-	case 9:
-		// test
-		displayLCDCenteredString(1, "Blue Left E");
-		auton_blue_left_E();
-		break;
-	case 10:
-		// test
-		displayLCDCenteredString(1, "Blue Right Main");
-		auton_blue_right_main();
-		break;
-	case 11:
-		// test
-		displayLCDCenteredString(1, "Blue Right Alt");
-		auton_blue_right_alt();
-		break;
-	case 12:
-		// test
-		displayLCDCenteredString(1, "Blue Right E");
-		auton_blue_right_E();
-		break;
-	case 13:
-		// test
-		displayLCDCenteredString(1, "Prog Skills");
-		auton_programmingskills();
-		break;
-	case 14:
-		// test
-		displayLCDCenteredString(1, "Test");
-		auton_test();
-		break;
-	}
+bLCDBacklight = true; // Turn on LCD Backlight
+displayLCDCenteredString(0, "Autonomous");
+switch(count){
+case 0:
+	// No Autonomous
+	displayLCDCenteredString(1, "No Autonomous");
+	break;
+case 1:
+	displayLCDCenteredString(1, "Red Left Main");
+	auton_red_left_main();
+	break;
+case 2:
+	displayLCDCenteredString(1, "Red Left Alt");
+	auton_red_left_alt();
+	break;
+case 3:
+	displayLCDCenteredString(1, "Red Left E");
+	auton_red_left_E();
+	break;
+case 4:
+	displayLCDCenteredString(1, "Red Right Main");
+	auton_red_right_main();
+	break;
+case 5:
+	displayLCDCenteredString(1, "Red Right Alt");
+	auton_red_right_alt();
+	break;
+case 6:
+	displayLCDCenteredString(1, "Red Right E");
+	auton_red_right_E();
+	break;
+case 7:
+	displayLCDCenteredString(1, "Blue Left Main");
+	auton_blue_left_main();
+	break;
+case 8:
+	// test
+	displayLCDCenteredString(1, "Blue Left Alt");
+	auton_blue_left_alt();
+	break;
+case 9:
+	// test
+	displayLCDCenteredString(1, "Blue Left E");
+	auton_blue_left_E();
+	break;
+case 10:
+	// test
+	displayLCDCenteredString(1, "Blue Right Main");
+	auton_blue_right_main();
+	break;
+case 11:
+	// test
+	displayLCDCenteredString(1, "Blue Right Alt");
+	auton_blue_right_alt();
+	break;
+case 12:
+	// test
+	displayLCDCenteredString(1, "Blue Right E");
+	auton_blue_right_E();
+	break;
+case 13:
+	// test
+	displayLCDCenteredString(1, "Prog Skills");
+	auton_programmingskills();
+	break;
+case 14:
+	// test
+	displayLCDCenteredString(1, "Test");
+	auton_test();
+	break;
+}
 }
 
 task usercontrol()
 {
-	datalogClear();
-	wait1Msec(1);
-	//startTask(clawLeftControl);
-	//startTask(clawRightControl);
-	startTask(combinedControl);
-	//startTask(liftThrow);
-	//startTask(grapher);
+datalogClear();
+wait1Msec(1);
+//startTask(clawLeftControl);
+//startTask(clawRightControl);
+startTask(combinedControl);
+//startTask(liftThrow);
+//startTask(grapher);
 
 }
