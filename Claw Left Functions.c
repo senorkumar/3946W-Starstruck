@@ -1,13 +1,13 @@
-int clawLeftPositionOpen = 3967;
+int clawLeftPositionOpen = 1695;
 int clawLeftPositionHalf = 880;
 int clawLeftPositionE = 830;
-int clawLeftPositionClosed= 2560;
+int clawLeftPositionClosed= 2805;
 int clawLeftPositionFlat = 1940;
 int clawLeftPositionPreloadClosed = 780;
 
-float kP_CL=0.1;//.35
+float kP_CL=0.25;//.35
 float kI_CL = 0.0;
-float kD_CL = 0.85;//.35
+float kD_CL = 0.35;//.35
 float error_CL=0;
 float integral_CL= 0;
 float derivative_CL = 0;
@@ -23,7 +23,6 @@ bool runPID_CL = true;
 void setClawLeft(int speed){
 	motor[clawLeft]= speed;
 }
-
 
 void resetClaw(){
 	setClawLeft(0);
