@@ -1,4 +1,4 @@
-int clawRightPositionOpen = 1741;//2121
+int clawRightPositionOpen = 1750;//2121
 int clawRightPositionHalf = 1104;
 int clawRightPositionE = 1000;
 int clawRightPositionClosed = 2847;
@@ -47,4 +47,3 @@ void clawRightControlPID(int ticks){
 		wait1Msec(15);
 
 }
-

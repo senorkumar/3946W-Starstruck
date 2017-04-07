@@ -219,16 +219,14 @@ task combinedControl(){ //drive, lift, clawinput
 		//Claw Contol
 
 		if(vexRT[Btn6U] == 1){
-			motor[clawLeft] = 127;
-			motor[clawRight] = 127;
-			currentPosition_CL = SensorValue[clawLeftPot] + 1;
-			currentPosition_CR = SensorValue[clawRightPot] + 1;
+			currentPosition_CL = clawLeftPositionOpen;
+			currentPosition_CR = clawRightPositionOpen;
 		}
 		else if(vexRT[Btn6D] == 1){
 			motor[clawLeft] = -127;
 			motor[clawRight] = -127;
-			currentPosition_CL = SensorValue[clawLeftPot] - 1;
-			currentPosition_CR = SensorValue[clawRightPot] - 1;
+			currentPosition_CL = SensorValue[clawLeftPot] + 200;
+			currentPosition_CR = SensorValue[clawRightPot] + 200;
 		}
 		else if(vexRT[Btn8RXmtr2] == 1 || SensorValue[liftQuad] > 500){
 			currentPosition_CL = clawLeftPositionOpen;
