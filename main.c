@@ -297,6 +297,13 @@ while(true){
 }
 }
 
+task clawControlAuton(){
+	while(true){
+		clawLeftControlPID(setPosition_CL);
+		clawRightControlPID(setPosition_CR);
+	}
+}
+
 
 
 
@@ -324,10 +331,9 @@ while(true){
 task autonomous()
 {
 
-startTask(liftControlAuton);
-//startTask(clawLeftControl);
-//startTask(clawRightControl);
-startTask(liftThrowAuton);
+//startTask(liftControlAuton);
+//startTask(liftThrowAuton);
+startTask(clawControlAuton);
 wait1Msec(1);
 
 bLCDBacklight = true; // Turn on LCD Backlight

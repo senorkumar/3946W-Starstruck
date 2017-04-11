@@ -13,7 +13,7 @@ float integral_CR= 0;
 float derivative_CR = 0;
 
 int currentPosition_CR = SensorValue(clawLeftPot);
-int setPosition_CR = clawRightPositionClosed;
+int setPosition_CR = currentPosition_CR;
 int lastCurrentPosition_CR = currentPosition_CR;
 int integralCap_CR = 200;
 int speed_CR = 0;

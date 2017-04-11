@@ -2,12 +2,12 @@ int driveTurn90 = 412;
 int driveTurn180 = 823;
 void setDriveLeft(int speed) // sets left side of drive to speed
 {
-	motor[port3] = speed;
+	motor[port4] = speed;
 }
 
 void setDriveRight(int speed) // sets right side of drive to speed
 {
-	motor[port5] = speed;
+	motor[port2] = speed;
 }
 void setDrive(int speed){
 	setDriveLeft(speed);
