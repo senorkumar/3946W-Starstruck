@@ -36,11 +36,24 @@ void auton_red_right_main(){
 
 
 void auton_red_right_alt(){
+	setDriveForwardDistance(-300,-1,2000,false);
 	clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
-	wait1Msec(100);
-	setLiftPosition(490);
-	setDriveForwardDistance(1450,1,2500);
+	setLiftPosition(746);
+	setDriveForwardDistance(-1325,-1,2500);
+	wait1Msec(5000);
+	setDrive(-40);
+	wait1Msec(1000);
+	setDrive(0);
+	setLiftPosition(0);
+	wait1Msec(1100);
+	gyroTurn("l",15,1,15);
+	setDriveForwardDistance(1300,1,3000);
+	clawLeftSetPosition(clawLeftPositionClosed);
+	clawRightSetPosition(clawRightPositionClosed);
+	wait1Msec(200):
+	setLiftPosition(746);
+	setDriveForwardDistance(-1300,-1,3000);
 
 }
 
