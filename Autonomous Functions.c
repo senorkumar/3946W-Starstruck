@@ -38,8 +38,9 @@ void auton_red_right_main(){
 void auton_red_right_alt(){
 	clawLeftSetPosition(clawLeftPositionOpen);
 	clawRightSetPosition(clawRightPositionOpen);
-	setLiftPosition(358);
-	setDriveForwardDistance(1250,1,2500);
+	wait1Msec(100);
+	setLiftPosition(490);
+	setDriveForwardDistance(1450,1,2500);
 
 }
 
