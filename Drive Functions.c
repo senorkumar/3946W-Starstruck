@@ -69,6 +69,42 @@ void setDriveForwardDistance(int distance, int direction, int maxTime){
 	}
 }
 
+void setDriveForwardDistance(int distance, int direction, int maxTime, bool brake){
+	SensorValue(driveLeftQuad) = 0;
+	SensorValue(driveRightQuad) = 0;
+	int time=0;
+	if(direction >0){
+		while(((SensorValue(driveLeftQuad) + SensorValue(driveRightQuad))/2 < distance) && time<maxTime){
+			setDrive(127);
+			time++;
+			wait1Msec(1);
+		}
+		if(brake){
+		setDrive(-127);
+		wait1Msec(100);
+
+
+		setDrive(0);
+		wait1Msec(10);
+	}
+	}
+	else{
+		while(((SensorValue(driveLeftQuad) + SensorValue[driveRightQuad])/2 > distance) && time<maxTime){
+			setDrive(-127);
+			time++;
+			wait1Msec(1);
+		}
+		if(brake){
+		setDrive(127);
+		wait1Msec(100);
+
+		setDrive(0);
+		wait1Msec(10);
+	}
+	}
+}
+
+
 void setDriveTurn(int distance, int direction){
 	SensorValue(driveLeftQuad) = 0;
 	SensorValue(driveRightQuad) = 0;

@@ -1,7 +1,7 @@
 int clawRightPositionOpen = 1554;//2121
 int clawRightPositionHalf = 1104;
 int clawRightPositionE = 1000;
-int clawRightPositionClosed = 1648;
+int clawRightPositionClosed = 2747
 int clawRightPositionFlat = 2882;
 int clawRightPositionPreloadClosed = 780;
 

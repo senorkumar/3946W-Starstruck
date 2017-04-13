@@ -21,10 +21,10 @@
 //Main competition background code...do not modify!
 #include "Vex_Competition_Includes.c"
 #include "Drive Functions.c"
-#include "Lift Functions.c"
 #include "Sensor Functions.c"
 #include "Claw Left Functions.c"
 #include "Claw Right Functions.c"
+#include "Lift Functions.c"
 #include "Throw Functions.c"
 #include "LCD Functions.c"
 #include "Autonomous Functions.c"
@@ -201,19 +201,16 @@ task combinedControl(){ //drive, lift, clawinput
 
 
 		if(vexRT[Btn5U] == 1 && (SensorValue(liftQuad)<780|| vexRT[Btn8UXmtr2])){
-			setLift(127);
+			lift(127);
 			setPosition_lift = SensorValue(liftQuad)+30;
 		}
 		else if (vexRT[Btn5D]==1&& SensorValue(liftQuad)>-1){
-			setLift(-127);
+			lift(-127);
 			setPosition_lift = SensorValue(liftQuad)-30;
 		}
 		else{
 			currentPositon_lift = SensorValue(liftQuad);
-
-			error_lift = setPosition_lift - currentPositon_lift;
-			int speed = kP_lift * error_lift;
-			setLift(speed);
+			liftPID(setPosition_lift);
 		}
 
 		//Claw Contol
@@ -243,59 +240,7 @@ task combinedControl(){ //drive, lift, clawinput
 }
 
 
-task liftControlAuton(){
-	while(true){
-		while(runPID_lift){
-			currentPositon_lift = SensorValue(liftQuad);
 
-			error_lift = setPosition_lift - currentPositon_lift;
-			int speed = kP_lift * error_lift;
-			setLift(speed);
-		}
-	}
-	wait1Msec(5);
-}
-
-
-task liftThrow(){
-while(true){
-
-	liftPosition = SensorValue(liftQuad);
-
-	//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
-	//	clawLeftSetPosition(clawLeftPositionOpen);
-	//	clawRightSetPosition(clawRightPositionOpen);
-	//}
-	if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar){
-		clawLeftSetPosition(clawLeftPositionOpen);
-		clawRightSetPosition(clawRightPositionOpen);
-	}
-
-
-	lastLiftPosition = SensorValue(liftQuad);
-	wait1Msec(10);
-}
-}
-
-task liftThrowAuton(){
-while(true){
-
-	liftPosition = SensorValue(liftQuad);
-
-	//if((vexRT[Btn8DXmtr2]==1) && (liftPosition>lastLiftPosition) && liftPosition>throwThresholdClose){
-	//	clawLeftSetPosition(clawLeftPositionOpen);
-	//	clawRightSetPosition(clawRightPositionOpen);
-	//}
-	if((liftPosition>lastLiftPosition) && liftPosition>throwThresholdFar && runThrow){
-		clawLeftSetPosition(clawLeftPositionOpen);
-		clawRightSetPosition(clawRightPositionOpen);
-	}
-
-
-	lastLiftPosition = SensorValue(liftQuad);
-	wait1Msec(10);
-}
-}
 
 task clawControlAuton(){
 	while(true){
@@ -331,7 +276,7 @@ task clawControlAuton(){
 task autonomous()
 {
 
-//startTask(liftControlAuton);
+startTask(holdLift);
 //startTask(liftThrowAuton);
 startTask(clawControlAuton);
 wait1Msec(1);
